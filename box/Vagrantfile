@@ -1,0 +1,8 @@
+Vagrant.configure('2') do |config|
+  config.vm.provider :aws do |aws, override|
+    override.ssh.username = 'ubuntu'
+    # trusty 64 hvm
+    aws.region_config 'us-east-1', ami: 'ami-2828b340'
+    aws.instance_type = 'm3.medium'
+  end
+end

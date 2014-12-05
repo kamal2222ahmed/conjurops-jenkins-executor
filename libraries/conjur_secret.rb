@@ -9,6 +9,6 @@ module ConjurSecret
   end
 end
 
-module Chef::Resource
+class Chef::Resource
   include ConjurSecret
 end

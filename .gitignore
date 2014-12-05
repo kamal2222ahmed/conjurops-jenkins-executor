@@ -1,3 +1,5 @@
+aws.secrets
+
 .conjurrc
 .netrc
 conjur-conjurops.pem

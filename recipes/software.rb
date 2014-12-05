@@ -1,0 +1,10 @@
+include_recipe "apt"
+include_recipe 'build-essential'
+package "curl"
+package "vim"
+package "git"
+include_recipe "postgresql"
+include_recipe "conjurops-jenkins::docker"
+include_recipe "conjurops-jenkins::rvm"
+include_recipe "conjurops-jenkins::buncker"
+include_recipe "nodejs"
