@@ -1,4 +1,16 @@
-# jenkins
+# conjurops-jenkins
 
-TODO: Enter the cookbook description here.
+## Running locally with Vagrant
 
+Create local Conjur config and .netrc:
+
+    $ conjur init -h conjur-master.itp.conjur.net
+    $ conjur authn login
+
+Bring up Jenkins:
+
+    $ vagrant up
+
+Use Jenkins:
+
+    $ open localhost:9080

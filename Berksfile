@@ -2,7 +2,5 @@ source "https://supermarket.getchef.com"
 
 metadata
 
-cookbook 'conjur-ssh', github: 'conjur-cookbooks/conjur-ssh'
-cookbook 'conjur-client', github: 'conjur-cookbooks/conjur-client'
-cookbook 'terminal-login', github: 'conjur-cookbooks/terminal-login'
-cookbook 'sshd-service', github: 'conjur-cookbooks/sshd-service'
+cookbook 'conjur-host-identity', github: 'conjur-cookbooks/conjur-host-identity-chef'
+cookbook 'nodejs', github: 'redguide/nodejs'

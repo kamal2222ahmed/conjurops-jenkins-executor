@@ -1,3 +1,7 @@
+.conjurrc
+.netrc
+conjur-conjurops.pem
+
 .vagrant
 Berksfile.lock
 *~
