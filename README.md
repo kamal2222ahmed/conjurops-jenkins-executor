@@ -13,4 +13,4 @@ Bring up Jenkins:
 
 Use Jenkins:
 
-    $ open localhost:9080
+    $ open http://localhost:9080
