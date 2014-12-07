@@ -1,7 +1,8 @@
 include_recipe "docker"
 
-file "/etc/sudoers.d/jenkins-docker" do
-  content <<-SUDOERS
-jenkins ALL=(ALL) NOPASSWD: /usr/bin/docker
-  SUDOERS
+# Required for Unix authentication
+group "docker" do
+  append true
+  members [ "jenkins" ]
+  action :modify
 end

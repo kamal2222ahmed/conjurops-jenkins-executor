@@ -7,11 +7,9 @@ if File.exists?('/vagrant/.netrc')
   end.run_action(:create)
 end
 
-include_recipe "conjur-host-identity"
-
 file '/var/lib/jenkins/.netrc' do
   content File.read '/etc/conjur.identity'
   user 'jenkins'
   mode 0600
+  only_if { File.exists?("/etc/conjur.identity") }
 end
-

@@ -1,3 +1,8 @@
+def building_ami?
+  # assuming this won't be defined in non-build environment -div.
+  !ENV['AMI_NAME'].nil?
+end
+
 %w(vagrant-omnibus).each do |gem|
   begin
     require gem
@@ -22,19 +27,23 @@ Vagrant.configure("2") do |config|
     override.vm.network "forwarded_port", guest: 443, host: 9443
   end
   
-  config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
-  end
-  
   config.vm.define "master" do |master|
     master.vm.provision :chef_solo do |chef|
       chef.add_recipe 'conjurops-jenkins::master'
+    end
+    
+    master.vm.provider :aws do |aws, override|
+      aws.security_groups = [ 'jenkins-master' ]
     end
   end
  
   config.vm.define "slave" do |slave|
     slave.vm.provision :chef_solo do |chef|
       chef.add_recipe 'conjurops-jenkins::slave'
+    end
+    
+    slave.vm.provider :aws do |aws, override|
+      aws.security_groups = [ 'jenkins-slave' ]
     end
   end
 
@@ -44,5 +53,10 @@ Vagrant.configure("2") do |config|
 
     aws.keypair_name = ENV['AWS_KEYPAIR_NAME']
     override.ssh.private_key_path = ENV['SSH_PRIVATE_KEY_PATH']
+  end
+
+  config.vm.provision :chef_solo do |chef|
+    chef.log_level = :debug
+    chef.add_recipe 'conjurops-jenkins::preami-cleanup' if building_ami?
   end
 end

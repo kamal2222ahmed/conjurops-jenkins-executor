@@ -1,4 +1,5 @@
-aws.secrets
+*.json
+aws-*.secrets
 
 .conjurrc
 .netrc
