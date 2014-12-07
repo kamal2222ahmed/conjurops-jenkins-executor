@@ -5,9 +5,10 @@ Builds a Jenkins server from Chef, ready to run Conjur build and integration pro
 This project is a chef-solo recipe, which is designed to be used in several different workflows:
 
 * Run a local Jenkins in Vagrant, with no authentication.
-* Build a Jenkins image (e.g. with Packer), targeting AWS AMI, Docker, LXC, etc.
+* Build and run a remote Jenkins server.
+* Build Jenkins images (e.g. AMI, Docker, LXC).
 
-Obviously there are slight differences between these targets. Details TBD.
+Obviously there are slight differences between these targets. Details (mostly) TBD. Tested workflows are Vagrant-powered local VM, and Vagrant-powered EC2 instance.
 
 # Description
 
@@ -18,8 +19,8 @@ Obviously there are slight differences between these targets. Details TBD.
 ## Packages
 
 * Jenkins
-* Jenkins plugins (attribute `jenkins.plugins`)
 * Conjur CLI and API software, server connection configuration, and identity.
+* Postgresql
 * RVM available to Jenkins
 * Rubies 1.9.3 and 2.0.0, installed into RVM
 * Node.js (for Conjur LDAP service)
@@ -30,7 +31,7 @@ Obviously there are slight differences between these targets. Details TBD.
 * Connect to and trust Conjur (`/etc/conjur.conf`, `/etc/conjur-conjurops.pem`)
 * Trust Github
 * Trust RVM
-* `/etc/sudoers.d/jenkins` allows Jenkins to run Docker and [Buncker](https://github.com/conjurinc/buncker)
+* Make `jenkins` a member of the `docker` group
 
 ## Secrets
 
@@ -38,9 +39,7 @@ Obviously there are slight differences between these targets. Details TBD.
 
     In a Vagrant environment, the developer's identity is copied to the Jenkins machine. In a production environment, Jenkins needs its own identity.
 
-The remainder of the secrets are fetched from Conjur, using the Conjur API, and injected via the recipes: 
-
-* Jenkins SSH key.
+The remainder of the secrets are fetched from Conjur, using the Conjur API, and injected via the recipes. Jobs are configured to use [conjur env run](http://developer.conjur.net/reference/tools/conjurenv/run.html), a la `conjur env run -- job-script.sh`.
 
 # Running locally with Vagrant
 
@@ -85,7 +84,7 @@ Launch the machine:
 Create the Conjur host identity:
 
     $ conjur host create ec2/i-47bb72ae | tee host.json
-    $ conjur resource annotate host:ec2/i-47bb72ae name "KEG Development Jenkins Recovery [0]"
+    $ conjur resource annotate host:ec2/i-47bb72ae name "KEG Development Jenkins"
     $ conjur resource annotate host:ec2/i-47bb72ae jenkins.url "http://54.237.61.96:8080"
     
 Install and configure Conjur on the machine:
@@ -130,7 +129,7 @@ Conjurize the host:
     [2014-12-07T17:10:47+00:00] INFO: Running report handlers
     [2014-12-07T17:10:47+00:00] INFO: Report handlers complete
 
-Login as self!
+Login as self:
 
     kgilpin@spudling $ ssh jenkins-001.itci.conjur.net
     ...
@@ -148,4 +147,3 @@ Login as self!
     # dpkg -i conjur.deb
     # GLI_DEBUG=true /opt/conjur/bin/conjur authn whoami
     {"account":"conjurops","username":"host/jenkins-001.itci.conjur.net"
-
