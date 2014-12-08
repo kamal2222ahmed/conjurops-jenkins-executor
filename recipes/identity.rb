@@ -10,5 +10,5 @@ file '/var/lib/jenkins/.netrc' do
   content File.read '/etc/conjur.identity'
   user 'jenkins'
   mode 0600
-  only_if { File.exists?("/etc/conjur.identity") }
+  only_if { File.exists?('/etc/conjur.identity') }
 end

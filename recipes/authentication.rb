@@ -1,23 +1,23 @@
 # Required for Unix authentication
-group "shadow" do
+group 'shadow' do
   append true
-  members [ "jenkins" ]
+  members ['jenkins']
   action :modify
 end
 
 # TODO: Allow PasswordAuthentication
-ruby_block "permit password-based login" do
+ruby_block 'permit password-based login' do
   block do
-    lines = File.read("/etc/ssh/sshd_config").split("\n")
+    lines = File.read('/etc/ssh/sshd_config').split("\n")
     lines.each_index do |i|
       if lines[i] =~ /PasswordAuthentication/
-        lines[i] = "PasswordAuthentication yes"
+        lines[i] = 'PasswordAuthentication yes'
       end
     end
-    File.write("/etc/ssh/sshd_config", lines.join("\n"))
+    File.write('/etc/ssh/sshd_config', lines.join("\n"))
   end
 end
 
-service "ssh" do
+service 'ssh' do
   action [ :enable, :restart ]
 end

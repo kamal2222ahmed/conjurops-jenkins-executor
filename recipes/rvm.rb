@@ -1,9 +1,9 @@
 # RVM key trust
-execute "gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3" do
+execute 'gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3' do
   user 'jenkins'
   environment 'HOME' => '/var/lib/jenkins'
 end
-execute "curl -sSL https://get.rvm.io | bash -s stable" do
+execute 'curl -sSL https://get.rvm.io | bash -s stable' do
   user 'jenkins'
   environment 'HOME' => '/var/lib/jenkins'
   creates '/var/lib/jenkins/.rvm'
@@ -12,7 +12,7 @@ end
 # Dependencies will fail to install because Jenkins doesn't have permission to install packages. We will do it manually
 # (see below).
 # http://stackoverflow.com/questions/16563115/how-to-install-rvm-system-requirements-without-giving-sudo-for-rvm-user
-bash "rvm autolibs fail" do
+bash 'rvm autolibs fail' do
   user 'jenkins'
 end
   

@@ -1,7 +1,7 @@
-git "/opt/buncker" do
-  repository "git://github.com/conjurinc/buncker.git"
+git '/opt/buncker' do
+  repository 'git://github.com/conjurinc/buncker.git'
 end
 
-bash "make" do
+bash 'make' do
   cwd '/opt/buncker'
 end

@@ -1,8 +1,8 @@
-include_recipe "docker"
+include_recipe 'docker'
 
 # Required for Unix authentication
-group "docker" do
+group 'docker' do
   append true
-  members [ "jenkins" ]
+  members ['jenkins']
   action :modify
 end
