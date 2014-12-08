@@ -1,10 +1,9 @@
-if File.exists?('/vagrant/.netrc')
-  netrc = File.read('/vagrant/.netrc')
-  
-  file '/etc/conjur.identity' do
-    content netrc
-    mode 0600
-  end.run_action(:create)
+# Sets up the conjur identity file
+
+file '/etc/conjur.identity' do
+  content File.read('/vagrant/.netrc')
+  mode 0600
+  only_if { File.exists?('/vagrant/.netrc') }
 end
 
 file '/var/lib/jenkins/.netrc' do

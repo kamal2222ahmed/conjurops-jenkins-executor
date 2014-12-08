@@ -4,12 +4,14 @@ maintainer_email 'you@example.com'
 license          'all_rights'
 description      'Installs/Configures jenkins'
 long_description 'Installs/Configures jenkins'
-version          '0.1.0'
+version          '0.1.0.dev'
 
-depends "apt"
-depends "build-essential"
-depends "conjur-host-identity"
-depends "jenkins"
-depends "nodejs"
-depends "docker"
-depends "postgresql"
+supports 'ubuntu'
+
+depends 'apt', '~> 2.6.0'
+depends 'build-essential', '~> 2.1.3'
+depends 'conjur-host-identity'
+depends 'docker', '~> 0.36.0'
+depends 'git', '~> 4.0.2'
+depends 'jenkins', '~> 2.2.1'
+depends 'postgresql', '~> 3.4.14'

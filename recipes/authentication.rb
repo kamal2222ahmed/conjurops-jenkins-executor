@@ -21,7 +21,3 @@ end
 service "ssh" do
   action [ :enable, :restart ]
 end
-
-directory "/var/lib/jenkins/.ssh" do
-  user 'jenkins'
-end
