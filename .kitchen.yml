@@ -7,11 +7,6 @@ driver_config:
   - <%= ENV['NETRC_PATH'] %>:/home/kitchen/project
   forward:
   - 8080:8080
-  provision_command:
-  # hack needed on docker for postgres permissions https://github.com/nimiq/docker-postgresql93/pull/4
-  - mkdir /etc/ssl/private-copy; mv /etc/ssl/private/* /etc/ssl/private-copy/;
-  - rm -r /etc/ssl/private; mv /etc/ssl/private-copy /etc/ssl/private;
-  - chmod -R 0700 /etc/ssl/private; chown -R postgres /etc/ssl/private
 
 provisioner:
   name: chef_zero

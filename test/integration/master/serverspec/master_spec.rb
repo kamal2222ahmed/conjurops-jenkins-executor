@@ -31,13 +31,13 @@ describe 'conjurops-jenkins::master' do
     expect(file(known_hosts)).to contain /heroku.com/
   end
 
-  it 'should install and start postgres' do
-    %w{postgresql-9.3 postgresql-contrib-9.3}.each do |pkg|
-      expect(package(pkg)).to be_installed
-    end
-    expect(service('postgresql')).to be_enabled
-    expect(service('postgresql')).to be_running
-  end
+  # it 'should install and start postgres' do
+  #   %w{postgresql-9.3 postgresql-contrib-9.3}.each do |pkg|
+  #     expect(package(pkg)).to be_installed
+  #   end
+  #   expect(service('postgresql')).to be_enabled
+  #   expect(service('postgresql')).to be_running
+  # end
 
   it 'should install and enable docker' do
     expect(service('docker')).to be_enabled
