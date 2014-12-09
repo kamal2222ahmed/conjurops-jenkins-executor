@@ -21,6 +21,9 @@ end
   package pkg
 end
 
+# For dep-selector-libgecode gem
+package 'libgecode36'
+
 %w(ruby-1.9.3 ruby-2.0.0 ruby-2.1.0).each do |ruby|
   bash "rvm install #{ruby}" do
     user 'jenkins'
