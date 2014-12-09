@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+jenkins_home = '/var/lib/jenkins'
+
 describe 'conjurops-jenkins::master' do
   it 'should install and start jenkins' do
     expect(package('jenkins')).to be_installed
@@ -15,14 +17,14 @@ describe 'conjurops-jenkins::master' do
   end
 
   it 'should place the conjur .netrc file for the jenkins user' do
-    netrc = '/var/lib/jenkins/.netrc'
+    netrc = "#{jenkins_home}/.netrc"
     expect(file(netrc)).to be_file
     expect(file(netrc)).to be_mode(600)
     expect(file(netrc)).to be_owned_by('jenkins')
   end
 
   it 'should render a known_hosts file for jenkins user' do
-    known_hosts = '/var/lib/jenkins/.ssh/known_hosts'
+    known_hosts = "#{jenkins_home}/.ssh/known_hosts"
     expect(file(known_hosts)).to be_file
     expect(file(known_hosts)).to be_mode(644)
     expect(file(known_hosts)).to be_owned_by('jenkins')
@@ -39,6 +41,7 @@ describe 'conjurops-jenkins::master' do
 
   it 'should install and enable docker' do
     expect(service('docker')).to be_enabled
+    expect(user('jenkins')).to belong_to_group 'docker'
   end
 
   it 'should install buncker' do
