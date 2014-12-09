@@ -1,5 +1,5 @@
-default['jenkins']['master']['install_method'] = 'package' 
-  
+default['jenkins']['master']['install_method'] = 'package'
+
 default['docker']['package']['repo_url'] = 'https://get.docker.io/ubuntu'
 
 default['conjur']['version'] = '4.17.0'
