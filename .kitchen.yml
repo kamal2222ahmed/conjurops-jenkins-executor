@@ -13,5 +13,5 @@ platforms:
 suites:
   - name: master
     run_list:
-      - recipe[jenkins::master]
+      - recipe[conjurops-jenkins::master]
     attributes:
