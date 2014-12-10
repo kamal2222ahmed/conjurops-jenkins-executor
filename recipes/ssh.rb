@@ -6,11 +6,12 @@ directory "#{jenkins_home}/.ssh" do
   mode '0644'
 end
 
-# file "#{jenkins_home}/.ssh/id_rsa" do
-#   content conjur_secret 'jenkins/private-key'
-#   user 'jenkins'
-#   mode 0600
-# end
+file "#{jenkins_home}/.ssh/id_rsa" do
+  content conjur_secret 'jenkins/private-key'
+  user 'jenkins'
+  mode 0600
+  sensitive true
+end
 
 file "#{jenkins_home}/.ssh/known_hosts" do
   content <<-KNOWN_HOSTS

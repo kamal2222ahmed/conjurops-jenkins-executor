@@ -5,7 +5,10 @@ module ConjurSecret
 
   def conjur_api
     require 'conjur/authn'
-    Conjur::Authn.connect
+    require 'conjur/config'
+    Conjur::Config.load [ '/etc/conjur.conf' ]
+    Conjur::Config.apply
+    Conjur::Authn.connect noask: true
   end
 end
 
