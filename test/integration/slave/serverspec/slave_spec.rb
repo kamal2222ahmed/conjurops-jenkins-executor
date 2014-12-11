@@ -14,6 +14,10 @@ describe 'conjurops-jenkins::slave' do
     expect(command('vagrant version').stdout).to match /Installed Version: 1.7.0/
   end
 
+  it 'installs the Java JDK' do
+    expect(package('openjdk-6-jdk')).to be_installed
+  end
+
   it 'creates the jenkins user and group' do
     expect(user('jenkins')).to exist
     expect(user('jenkins')).to belong_to_group('jenkins')

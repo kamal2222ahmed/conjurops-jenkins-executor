@@ -4,18 +4,24 @@ include_recipe 'git'
 include_recipe 'rvm::system_install'
 include_recipe 'vagrant'
 
+vagrant_plugin 'vagrant-aws' do
+  version '0.5.0'
+end
+
+package 'openjdk-6-jdk'
+
 rvm_ruby '1.9.3'
 rvm_ruby '2.0.0'
 
-user "jenkins" do
+user 'jenkins' do
   action :create
-  comment "Jenkins user"
+  comment 'Jenkins user'
   home node['jenkins']['master']['home']
-  shell "/bin/bash"
-  supports :manage_home => true
+  shell '/bin/bash'
+  supports manage_home: true
 end
 
-group "jenkins" do
+group 'jenkins' do
   members ['jenkins']
 end
 
