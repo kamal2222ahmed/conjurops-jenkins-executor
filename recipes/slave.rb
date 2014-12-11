@@ -8,6 +8,10 @@ vagrant_plugin 'vagrant-aws' do
   version '0.5.0'
 end
 
+vagrant_plugin 'vagrant-omnibus' do
+  version '1.4.1'
+end
+
 package 'openjdk-6-jdk'
 
 rvm_ruby '1.9.3'
