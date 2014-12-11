@@ -8,7 +8,7 @@ module ConjurSecret
     require 'conjur/config'
     Conjur::Config.load [ '/etc/conjur.conf' ]
     Conjur::Config.apply
-    Conjur::Authn.connect noask: true
+    Conjur::Authn.connect nil, noask: true
   end
 end
 
