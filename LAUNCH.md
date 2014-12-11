@@ -84,3 +84,60 @@ Login as self:
     # dpkg -i conjur.deb
     # GLI_DEBUG=true /opt/conjur/bin/conjur authn whoami
     {"account":"conjurops","username":"host/jenkins-001.itci.conjur.net"
+
+---
+
+# Launching a Jenkins slave on EC2
+
+## Setup
+
+Install and activate [ChefDK](https://downloads.chef.io/chef-dk/).
+
+```
+chef gem install knife-ec2
+```
+
+Default values are set in `knife.rb` and can be overridden with [command-line flags](https://github.com/opscode/knife-ec2#configuration).
+
+## Launching
+
+```
+conjur env run -- knife ec2 server create --ssh-key [key-name] --identity-file [private-key]
+```
+
+where `key-name` is the name of your EC2 keypair and
+`private-key` is the path to your AWS .pem file.
+
+It will throw this error: `ERROR: Errno::ENOENT: No such file or directory @ rb_sysopen - /etc/chef/validation.pem`.
+You can ignore this, since we're not using a Chef server.
+
+The script will give you the instance's endpoint.
+You can now log into your instance as ubuntu user with
+
+```
+ssh [instance-endpoint] -i [private-key]
+```
+
+You can view instances with
+
+`conjur env run -- knife ec2 server list` and delete them with
+
+`conjur env run -- knife ec2 server [instance-id]`.
+
+## Provisioning
+
+Install [chef-runner](https://github.com/mlafeldt/chef-runner).
+
+You can apply recipes remotely with Chef runner.
+Set up your `~/.ssh/config` to pass the right credentials to the server if needed.
+
+For example, running the slave recipe:
+
+```
+chef exec chef-runner -H ubuntu@ec2-174-129-84-24.compute-1.amazonaws.com -i true conjurops-jenkins::slave
+```
+
+The `-i` flag is telling Chef runner to install the latest version of Chef on the machine, if it doesn't exist.
+
+The server is arbitrary, as long as you have SSH access you can apply Chef recipes to it.
+**Important:** you must use `chef exec` to run these commands so the right libraries are available (berkshelf, etc).

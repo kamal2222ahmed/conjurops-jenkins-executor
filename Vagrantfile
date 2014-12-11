@@ -14,9 +14,9 @@ end
 Vagrant.configure('2') do |config|
   config.vm.box = 'trusty64'
   config.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box'
-  
+
   config.ssh.forward_agent = true
-    
+
   config.omnibus.chef_version = 'latest'
 
   config.vm.provider :virtualbox do |vbox, override|
@@ -26,22 +26,22 @@ Vagrant.configure('2') do |config|
     override.vm.network 'forwarded_port', guest: 80, host: 9081
     override.vm.network 'forwarded_port', guest: 443, host: 9443
   end
-  
+
   config.vm.define 'master' do |master|
     master.vm.provision :chef_solo do |chef|
       chef.add_recipe 'conjurops-jenkins::master'
     end
-    
+
     master.vm.provider :aws do |aws, _|
       aws.security_groups = [ 'jenkins-master' ]
     end
   end
- 
+
   config.vm.define 'slave' do |slave|
-    slave.vm.provision :chef_solo do |chef|
-      chef.add_recipe 'conjurops-jenkins::slave'
-    end
-    
+    # slave.vm.provision :chef_solo do |chef|
+    #   chef.add_recipe 'conjurops-jenkins::slave'
+    # end
+
     slave.vm.provider :aws do |aws, _|
       aws.security_groups = [ 'jenkins-slave' ]
     end
