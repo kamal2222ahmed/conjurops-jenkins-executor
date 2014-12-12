@@ -4,7 +4,7 @@ driver_plugin: docker
 driver_config:
   socket: <%= ENV['DOCKER_HOST'] || 'unix:///var/run/docker.sock' %>
   volume:
-  - <%= ENV['NETRC_PATH'] %>:/home/kitchen/project
+  - <%= ENV['PWD'] %>:/home/kitchen/project
 
 provisioner:
   name: chef_zero

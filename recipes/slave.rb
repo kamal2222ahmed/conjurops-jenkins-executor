@@ -1,21 +1,8 @@
 include_recipe 'apt'
 include_recipe 'build-essential'
 include_recipe 'git'
-include_recipe 'rvm::system_install'
-include_recipe 'vagrant'
-
-vagrant_plugin 'vagrant-aws' do
-  version '0.5.0'
-end
-
-vagrant_plugin 'vagrant-omnibus' do
-  version '1.4.1'
-end
 
 package 'openjdk-6-jdk'
-
-rvm_ruby '1.9.3'
-rvm_ruby '2.0.0'
 
 user 'jenkins' do
   action :create
@@ -32,6 +19,8 @@ end
 chef_gem 'conjur-api'
 chef_gem 'conjur-cli'
 
-include_recipe 'conjurops-jenkins::authentication'
-include_recipe 'conjurops-jenkins::conjur'
-include_recipe 'conjurops-jenkins::ssh'
+include_recipe 'conjurops-jenkins::_vagrant'
+include_recipe 'conjurops-jenkins::_rvm'
+include_recipe 'conjurops-jenkins::_authentication'
+include_recipe 'conjurops-jenkins::_conjur'
+include_recipe 'conjurops-jenkins::_ssh'

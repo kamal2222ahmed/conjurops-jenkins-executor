@@ -68,7 +68,7 @@ Use Jenkins:
 Install the [ChefDK](https://downloads.chef.io/chef-dk/) and activate it. You should have docker running locally.
 If you're on OSX, use [boot2docker](https://github.com/boot2docker/osx-installer/releases).
 
-Copy your `~/.netrc` file to this project directory and run `export NETRC_PATH=$(pwd)`.
+Copy your `~/.netrc` file to this project directory.
 
 To bring the Jenkins master up:
 
@@ -88,6 +88,7 @@ Log in with `kitchen login master`. Password is 'kitchen'.
 
 When you're all done, run `kitchen destroy master`.
 
+Same process with the Jenkins slave, just use 'slave' instead of 'master' for the kitchen commands.
 ---
 
 check `LAUNCH.md` for instruction on how to launch the machine
