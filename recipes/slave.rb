@@ -21,6 +21,7 @@ chef_gem 'conjur-cli'
 
 include_recipe 'conjurops-jenkins::_vagrant'
 include_recipe 'conjurops-jenkins::_rvm'
+include_recipe 'conjurops-jenkins::_awscli'
 include_recipe 'conjurops-jenkins::_authentication'
 include_recipe 'conjurops-jenkins::_conjur'
 include_recipe 'conjurops-jenkins::_ssh'
