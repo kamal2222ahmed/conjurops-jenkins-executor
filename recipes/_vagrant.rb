@@ -2,6 +2,8 @@ include_recipe 'vagrant'
 
 jenkins_home = node['jenkins']['master']['home']
 
+directory "#{jenkins_home}/.vagrant.d"
+
 execute "chown the vagrant.d dir as jenkins" do
   command "chown -R jenkins:jenkins #{jenkins_home}/.vagrant.d"
 end
