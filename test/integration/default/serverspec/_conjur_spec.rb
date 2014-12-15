@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'conjurops-jenkins::_conjur' do
+describe 'conjurops-jenkins-slave::_conjur' do
   it 'places the conjur pem file' do
     expect(file('/opt/conjur.pem')).to be_file
   end

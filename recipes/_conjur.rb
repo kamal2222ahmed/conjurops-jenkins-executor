@@ -1,5 +1,6 @@
 file '/opt/conjur.pem' do
   content node['conjur']['configuration']['ssl_certificate']
+  sensitive true
 end
 
 template '/etc/conjur.conf' do
@@ -12,20 +13,4 @@ template '/etc/conjur.conf' do
   sensitive true
 end
 
-# Sets up the conjur identity file
-%w(/vagrant/.netrc /home/kitchen/project/.netrc).each do |path|
-  remote_file '/etc/conjur.identity' do
-    source "file://#{path}"
-    mode 0600
-    sensitive true
-
-    only_if { File.exist?(path) }
-  end
-end
-
-remote_file "#{node['jenkins']['master']['home']}/.netrc" do
-  source 'file:///etc/conjur.identity'
-  user 'jenkins'
-  mode 0600
-  sensitive true
-end
+chef_gem 'conjur-cli'

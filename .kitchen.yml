@@ -2,6 +2,7 @@
 driver_plugin: docker
 
 driver_config:
+  privileged: true
   socket: <%= ENV['DOCKER_HOST'] || 'unix:///var/run/docker.sock' %>
   volume:
   - <%= ENV['PWD'] %>:/home/kitchen/project
@@ -13,14 +14,7 @@ platforms:
 - name: ubuntu-14.04
 
 suites:
-  - name: master
-    forward:
-    - 8080:8080
+  - name: default
     run_list:
-      - recipe[conjurops-jenkins::master]
-    attributes:
-
-  - name: slave
-    run_list:
-      - recipe[conjurops-jenkins::slave]
+      - recipe[conjurops-jenkins-slave]
     attributes:

@@ -1,6 +1,6 @@
-# conjurops-jenkins
+# conjurops-jenkins-slave
 
-Builds a Jenkins server from Chef, ready to run Conjur build and integration processes.
+Builds a Jenkins slave from Chef, ready to run Conjur build and integration processes.
 
 This project is a chef-solo recipe, which is designed to be used in several different workflows:
 
