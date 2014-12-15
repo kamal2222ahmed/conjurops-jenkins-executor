@@ -1,6 +1,6 @@
 include_recipe 'apt'
-include_recipe 'git'
 
+package 'git'
 package 'openjdk-6-jdk'
 
 include_recipe 'conjurops-jenkins-slave::_user'

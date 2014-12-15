@@ -9,4 +9,3 @@ version          '0.1.0'
 supports 'ubuntu'
 
 depends 'apt', '~> 2.6.0'
-depends 'git', '~> 4.0.2'
