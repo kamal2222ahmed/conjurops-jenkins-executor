@@ -2,7 +2,8 @@
   "variables": {
     "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "instance_type": "m1.medium"
+    "instance_type": "m3.medium",
+    "git_hash": ""
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -13,7 +14,10 @@
     "source_ami": "ami-64e27e0c",
     "instance_type": "{{user `instance_type`}}",
     "ssh_username": "ubuntu",
-    "ami_name": "jenkins-slave-{{timestamp}}"
+    "ami_name": "jenkins-slave-{{timestamp}}",
+    "tags": {
+      "git_hash": "{{user `git_hash`}}"
+    }
   }],
   "provisioners": [{
     "type": "chef-solo",
