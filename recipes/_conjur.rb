@@ -12,5 +12,3 @@ template '/etc/conjur.conf' do
   )
   sensitive true
 end
-
-chef_gem 'conjur-cli'

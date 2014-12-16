@@ -1,5 +1,10 @@
 jenkins_home = node['jenkins']['home']
 
+directory jenkins_home do
+  owner 'jenkins'
+  group 'jenkins'
+end
+
 user 'jenkins' do
   action :create
   comment 'Jenkins user'

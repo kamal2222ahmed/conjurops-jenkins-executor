@@ -1,4 +1,4 @@
-default['jenkins']['home'] = '/mnt/jenkins'
+default['jenkins']['home'] = '/var/lib/jenkins'
 
 default['conjur']['version'] = '4.17.0'
 default['conjur']['configuration']['account'] = 'conjurops'
