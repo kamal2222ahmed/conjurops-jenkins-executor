@@ -1,7 +1,7 @@
+.vendor
 .chef-runner
 .idea
 .project
-*.json
 aws-*.secrets
 
 .conjurrc
@@ -9,7 +9,7 @@ aws-*.secrets
 conjur-conjurops.pem
 
 .vagrant
-Berksfile.lock
+*.lock
 *~
 *#
 .#*
