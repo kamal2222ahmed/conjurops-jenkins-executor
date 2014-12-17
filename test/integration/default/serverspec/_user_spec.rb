@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-jenkins_home = '/var/lib/jenkins'
+jenkins_home = '/mnt/jenkins'
 
 describe 'conjurops-jenkins-slave::_user' do
   it 'creates the jenkins user and group' do
