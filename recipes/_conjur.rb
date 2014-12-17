@@ -12,3 +12,14 @@ template '/etc/conjur.conf' do
   )
   sensitive true
 end
+
+package 'build-essential'
+package 'ruby-dev'
+
+gem_package 'conjur-cli' do
+  action :upgrade
+end
+
+execute 'fix conjur permissions to allow non-root to run the CLI' do
+  command 'chmod -R 755 /var/lib/gems/1.9.1/gems/conjur-*'
+end

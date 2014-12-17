@@ -11,4 +11,9 @@ describe 'conjurops-jenkins-slave::_conjur' do
     expect(file(conf)).to be_file
     expect(file(conf).content).to match /account: conjurops/
   end
+
+  it 'installs the conjur CLI' do
+    expect(command('which conjur').stdout).to match /\/usr\/local\/bin\/conjur/
+    expect(command('conjur --version').stdout).to match /conjur version/
+  end
 end
