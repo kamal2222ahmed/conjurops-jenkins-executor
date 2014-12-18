@@ -42,4 +42,6 @@ mv /tmp/id_rsa ${pem}
 chown jenkins:jenkins ${pem}
 chmod 600 ${pem}
 
+chown -R jenkins:jenkins /mnt/jenkins
+
 echo "All set!"
