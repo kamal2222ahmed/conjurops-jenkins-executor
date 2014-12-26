@@ -22,8 +22,15 @@ bash 'install docker' do
   not_if 'which docker'
 end
 
-service 'docker' do
-  supports :status => true, :restart => true
+group 'docker' do
+  append true
+  members ['jenkins']
+  action :modify
+end
+
+# needs a sleep here to ensure updated conf is applied
+execute 'docker_restart' do
+  command 'service docker stop; sleep 5; service docker start'
   action :nothing
 end
 
@@ -32,11 +39,5 @@ template '/etc/default/docker' do
   variables(
     docker_datadir: docker_datadir
   )
-  notifies :restart, 'service[docker]'
-end
-
-group 'docker' do
-  append true
-  members ['jenkins']
-  action :modify
+  notifies :run, 'execute[docker_restart]'
 end
