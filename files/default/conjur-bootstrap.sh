@@ -17,13 +17,14 @@ set -e
 host_token=$1
 host_id=$2
 chef_role=/var/chef/roles/host-identity.json
+
+export HOME=/root
+
 echo "Inserting hostfactory token and ID into $chef_role"
 sed -i "s/{{HOST_TOKEN}}/${host_token}/" ${chef_role}
 sed -i "s/{{HOST_ID}}/${host_id}/" ${chef_role}
 
-export HOME=/root
-
-echo "Moving the jenkins home dir to /mnt/jenkins to get more space"
+echo "Moving the jenkins home dir to /mnt/jenkins for more space"
 usermod -m -d /mnt/jenkins jenkins
 
 echo "Installing the latest version of chef-client"
@@ -43,5 +44,10 @@ chown jenkins:jenkins ${pem}
 chmod 600 ${pem}
 
 chown -R jenkins:jenkins /mnt/jenkins
+
+echo "Moving docker datadir to /mnt/docker for more space"
+mkdir -p /mnt/docker/tmp
+chown -R jenkins:jenkins /mnt/docker
+service docker stop && sleep 5 && service docker start
 
 echo "All set!"
