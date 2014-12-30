@@ -1,7 +1,6 @@
 jenkins_home = node['jenkins']['home']
 
 user 'jenkins' do
-  action :create
   home jenkins_home
   shell '/bin/bash'
   supports manage_home: true

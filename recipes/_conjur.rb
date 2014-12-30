@@ -21,3 +21,12 @@ cookbook_file '/opt/conjur-bootstrap.sh' do
   mode '0755'
 end
 
+group 'conjur'
+
+# Use append so that the group members aren't clobbered, in case
+# the conjur group is previously created with some other members.
+group 'conjur' do
+  append true
+  members ['jenkins']
+  action :modify
+end
