@@ -24,6 +24,9 @@ echo "Inserting hostfactory token and ID into $chef_role"
 sed -i "s/{{HOST_TOKEN}}/${host_token}/" ${chef_role}
 sed -i "s/{{HOST_ID}}/${host_id}/" ${chef_role}
 
+echo "Installing the latest version of chef-client"
+curl -L https://www.opscode.com/chef/install.sh | sudo bash
+
 echo "Running chef-solo role[host-identity]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity-chef/releases/download/v1.0.1/conjur-host-identity-chef-v1.0.1.tar.gz -o role[host-identity]
 
