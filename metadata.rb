@@ -9,3 +9,4 @@ version          '0.1.2'
 supports 'ubuntu'
 
 depends 'apt', '~> 2.6.0'
+depends 'conjur-client'

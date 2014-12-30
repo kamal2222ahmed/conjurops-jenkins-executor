@@ -2,7 +2,7 @@
   "variables": {
     "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-    "instance_type": "m1.medium",
+    "instance_type": "m3.medium",
     "git_hash": "{{env `GIT_HASH`}}"
   },
   "builders": [{
@@ -11,12 +11,18 @@
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-64e27e0c",
+    "source_ami": "ami-9eaa1cf6",
     "instance_type": "{{user `instance_type`}}",
     "ssh_username": "ubuntu",
     "ami_name": "jenkins-slave-{{timestamp}}",
+    "launch_block_device_mappings": [{
+      "device_name": "/dev/sda1",
+      "snapshot_id": "snap-1f806dbb",
+      "volume_size": 120
+    }],
     "tags": {
-      "git_hash": "{{user `git_hash`}}"
+      "git_hash": "{{user `git_hash`}}",
+      "conjur/app": "conjurops-jenkins-slave"
     }
   }],
   "provisioners": [{

@@ -24,30 +24,22 @@ echo "Inserting hostfactory token and ID into $chef_role"
 sed -i "s/{{HOST_TOKEN}}/${host_token}/" ${chef_role}
 sed -i "s/{{HOST_ID}}/${host_id}/" ${chef_role}
 
-echo "Moving the jenkins home dir to /mnt/jenkins for more space"
-usermod -m -d /mnt/jenkins jenkins
-
-echo "Installing the latest version of chef-client"
-curl -L https://www.opscode.com/chef/install.sh | sudo bash
-
 echo "Running chef-solo role[host-identity]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity-chef/releases/download/v1.0.1/conjur-host-identity-chef-v1.0.1.tar.gz -o role[host-identity]
 
 echo "Running chef-solo recipe[conjur-ssh]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/v1.2.3/conjur-ssh-v1.2.3.tar.gz -o conjur-ssh
 
-echo "Placing jenkins' private key so it can clone repos"
-pem=/mnt/jenkins/.ssh/id_rsa
-conjur variable value jenkins/private-key > /tmp/id_rsa
-mv /tmp/id_rsa ${pem}
-chown jenkins:jenkins ${pem}
-chmod 600 ${pem}
-
-chown -R jenkins:jenkins /mnt/jenkins
-
-echo "Moving docker datadir to /mnt/docker for more space"
-mkdir -p /mnt/docker/tmp
-chown -R jenkins:jenkins /mnt/docker
-service docker stop && sleep 5 && service docker start
+echo "Placing jenkins key material"
+chown -R jenkins:jenkins /var/lib/jenkins
+ssh_dir=/var/lib/jenkins/.ssh
+cd $ssh_dir
+/opt/conjur/bin/conjur variable value jenkins/private-key > id_rsa
+chmod 600 id_rsa
+ssh-keygen -y -f id_rsa > id_rsa.pub
+ssh-keygen -y -f id_rsa > authorized_keys
+chown -R jenkins:jenkins $ssh_dir
+chmod 644 id_rsa.pub
+chmod 640 authorized_keys
 
 echo "All set!"

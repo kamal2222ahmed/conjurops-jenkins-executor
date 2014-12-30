@@ -8,7 +8,8 @@
       },
       "configuration": {
         "appliance_url": "<%= @appliance_url %>",
-        "account": "<%= @account %>"
+        "account": "<%= @account %>",
+        "ssl_certificate": "<%= @ssl_certificate.split("\n").join("\\n") %>"
       }
     }
   },

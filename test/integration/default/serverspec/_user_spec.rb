@@ -11,10 +11,6 @@ describe 'conjurops-jenkins-slave::_user' do
     expect(user('jenkins')).to have_login_shell('/bin/bash')
   end
 
-  it 'places jenkins user in group "shadow"' do
-    expect(user('jenkins')).to belong_to_group('shadow')
-  end
-
   it 'places jenkins\' known_hosts file' do
     expect(file("#{jenkins_home}/.ssh/known_hosts")).to be_file
     expect(file("#{jenkins_home}/.ssh/known_hosts").content).to match /heroku.com/
