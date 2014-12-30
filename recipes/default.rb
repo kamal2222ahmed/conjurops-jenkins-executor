@@ -7,3 +7,5 @@ include_recipe 'conjurops-jenkins-slave::_user'
 include_recipe 'conjurops-jenkins-slave::_conjur'
 include_recipe 'conjurops-jenkins-slave::_docker'
 include_recipe 'conjurops-jenkins-slave::_chefdk'
+
+include_recipe 'packer'

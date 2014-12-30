@@ -9,8 +9,12 @@ describe 'conjurops-jenkins-slave::default' do
     expect(package('git')).to be_installed
   end
 
-  it 'install the Java 6 JDK' do
+  it 'installs the Java 6 JDK' do
     expect(package('openjdk-6-jdk')).to be_installed
     expect(command('java -version').stdout).to match /OpenJDK 64-Bit Server VM/
+  end
+
+  it 'installs packer' do
+    expect(command('packer version').stdout).to match /Packer v0.7.5/
   end
 end
