@@ -18,6 +18,9 @@ host_token=$1
 host_id=$2
 chef_role=/var/chef/roles/host-identity.json
 
+CONJUR_HOST_IDENTITY_VERSION=v1.0.1
+CONJUR_SSH_VERSION=v1.2.4
+
 export HOME=/root
 
 echo "Inserting hostfactory token and ID into $chef_role"
@@ -28,10 +31,10 @@ echo "Installing the latest version of chef-client"
 curl -L https://www.opscode.com/chef/install.sh | sudo bash
 
 echo "Running chef-solo role[host-identity]"
-chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity-chef/releases/download/v1.0.1/conjur-host-identity-chef-v1.0.1.tar.gz -o role[host-identity]
+chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity-chef/releases/download/${CONJUR_HOST_IDENTITY_VERSION}/conjur-host-identity-chef-${CONJUR_HOST_IDENTITY_VERSION}.tar.gz -o role[host-identity]
 
 echo "Running chef-solo recipe[conjur-ssh]"
-chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/v1.2.3/conjur-ssh-v1.2.3.tar.gz -o conjur-ssh
+chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${CONJUR_SSH_VERSION}/conjur-ssh-${CONJUR_SSH_VERSION}.tar.gz -o conjur-ssh
 
 echo "Placing jenkins key material"
 chown -R jenkins:jenkins /var/lib/jenkins
