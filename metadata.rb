@@ -4,7 +4,7 @@ maintainer_email 'you@example.com'
 license          'all_rights'
 description      'Installs/Configures jenkins slave'
 long_description 'Installs/Configures jenkins slave'
-version          '0.1.3'
+version          '0.1.4'
 
 supports 'ubuntu'
 
