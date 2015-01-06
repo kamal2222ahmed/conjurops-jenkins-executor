@@ -6,17 +6,36 @@
   end
 end
 
-Vagrant.configure("2") do |config|
-  config.vm.box = "trusty64"
-  config.vm.box_url = 'https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box'
-  config.ssh.forward_agent = true
-  config.omnibus.chef_version = 'latest'
+boxes = [
+  # Clean box, Ubuntu 14.04LTS - for experimentation
+  {
+    :name => :clean,
+    :recipes => []
+  },
+  # Jenkins slave box
+  {
+    :name => :slave,
+    :recipes => [
+      'conjurops-jenkins-slave::default'
+    ]
+  }
+]
 
-  config.vm.provider :virtualbox do |vbox, override|
-    vbox.memory = 1024
-  end
+Vagrant.configure("2") do |baseconfig|
+  boxes.each do |opts|
+    baseconfig.vm.define opts[:name] do |config|
+      config.vm.box = 'ubuntu/trusty64'
+      config.ssh.forward_agent = true
 
-  config.vm.provision :chef_solo do |chef|
-    chef.add_recipe 'conjurops-jenkins-slave::default'
+      config.vm.provider :virtualbox do |vbox, override|
+        vbox.memory = 1024
+      end
+
+      config.vm.provision :chef_solo do |chef|
+        opts[:recipes].each do |recipe|
+          chef.add_recipe recipe
+        end
+      end
+    end
   end
 end
