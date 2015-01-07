@@ -10,11 +10,15 @@ boxes = [
   # Clean box, Ubuntu 14.04LTS - for experimentation
   {
     :name => :clean,
+    :primary => false,
+    :autostart => false,
     :recipes => []
   },
   # Jenkins slave box
   {
     :name => :slave,
+    :primary => true,
+    :autostart => true,
     :recipes => [
       'conjurops-jenkins-slave::default'
     ]
@@ -23,7 +27,7 @@ boxes = [
 
 Vagrant.configure("2") do |baseconfig|
   boxes.each do |opts|
-    baseconfig.vm.define opts[:name] do |config|
+    baseconfig.vm.define opts[:name], primary: opts[:primary], autostart: opts[:autostart] do |config|
       config.vm.box = 'ubuntu/trusty64'
       config.ssh.forward_agent = true
 
