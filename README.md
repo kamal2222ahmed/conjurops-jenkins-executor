@@ -99,7 +99,9 @@ Create a development instance with an 80 GB root volume:
 Provision the instance with `chef-runner`:
 
     $ chef shell-init bash
-    $ chef exec chef-runner -i latest -H ubuntu@ec2-54-159-236-142.compute-1.amazonaws.com conjurops-jenkins-slave
+    $ ssh-add <key-name>
+    $ berks install
+    $ chef-runner -H ubuntu@ec2-54-159-236-142.compute-1.amazonaws.com conjurops-jenkins-slave
 
 At this point, there's an instance with the base recipes. To make it a working slave, it needs an identity.
 

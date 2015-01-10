@@ -1,10 +1,10 @@
 name             'conjurops-jenkins-slave'
-maintainer       'The Authors'
-maintainer_email 'you@example.com'
-license          'all_rights'
+maintainer       'Conjur Inc'
+maintainer_email 'support@conjur.net'
+license          'Restricted'
 description      'Installs/Configures jenkins slave'
 long_description 'Installs/Configures jenkins slave'
-version          '0.1.4'
+version          '0.1.5'
 
 supports 'ubuntu'
 
