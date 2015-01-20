@@ -24,11 +24,11 @@ if not (node["virtualization"] || {})["system"] == 'lxc'
   end
 end
 
-
 %w(lxc-attach lxc-destroy lxc-start-ephemeral lxc-autostart lxc-device lxc-stop lxc-cgroup lxc-execute lxc-top lxc-checkconfig lxc-freeze lxc-unfreeze lxc-checkpoint lxc-info lxc-unshare lxc-clone lxc-ls lxc-usernsexec lxc-config lxc-monitor lxc-wait lxc-console lxc-snapshot lxc-create lxc-start).each do |cmd|
-  sudo 'lxc' do
+  sudo cmd do
     user     "%sudo"
     runas    "root"
+    nopasswd true
     commands ["/usr/bin/#{cmd} *"]
   end
 end
