@@ -7,3 +7,9 @@ dpkg_package 'chefdk' do
   source '/tmp/chefdk.deb'
   action :install
 end
+
+execute 'install the kitchen-docker driver into ChefDK' do
+  command 'chef gem install kitchen-docker --no-user-install'
+
+  not_if 'chef gem list | grep kitchen-docker'
+end
