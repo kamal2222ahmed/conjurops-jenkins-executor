@@ -17,7 +17,6 @@ describe 'conjurops-jenkins-slave::_conjur' do
   it 'places the conjur-bootstrap script' do
     bootstrap = '/opt/conjur-bootstrap.sh'
 
-    expect(file(bootstrap)).to be_file
     expect(file(bootstrap)).to be_executable
   end
 end

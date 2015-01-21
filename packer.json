@@ -29,5 +29,13 @@
     "type": "chef-solo",
     "cookbook_paths": [".vendor/cookbooks"],
     "run_list": ["conjurops-jenkins-slave"]
+  },
+  {
+    "type": "shell",
+    "inline": [
+      "sudo apt-get purge -y chef",
+      "sudo rm -rf /opt/chef",
+      "sudo dpkg-reconfigure chefdk"
+    ]
   }]
 }
