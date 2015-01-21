@@ -17,7 +17,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[conjurops-jenkins-slave::_chefdk]
-      - recipe[conjurops-jenkins-slave::kitchen]
       - recipe[conjurops-jenkins-slave]
     attributes:
