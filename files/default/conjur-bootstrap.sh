@@ -28,7 +28,7 @@ sed -i "s/{{HOST_TOKEN}}/${host_token}/" ${chef_role}
 sed -i "s/{{HOST_ID}}/${host_id}/" ${chef_role}
 
 echo "Running chef-solo role[host-identity]"
-chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity-chef/releases/download/${CONJUR_HOST_IDENTITY_VERSION}/conjur-host-identity-chef-${CONJUR_HOST_IDENTITY_VERSION}.tar.gz -o role[host-identity]
+chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity/releases/download/${CONJUR_HOST_IDENTITY_VERSION}/conjur-host-identity-${CONJUR_HOST_IDENTITY_VERSION}.tar.gz -o role[host-identity]
 
 echo "Running chef-solo recipe[conjur-ssh]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${CONJUR_SSH_VERSION}/conjur-ssh-${CONJUR_SSH_VERSION}.tar.gz -o conjur-ssh
