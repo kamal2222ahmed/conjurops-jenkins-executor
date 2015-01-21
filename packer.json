@@ -3,7 +3,8 @@
     "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
     "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
     "instance_type": "m3.medium",
-    "git_hash": "{{env `GIT_HASH`}}"
+    "git_hash": "{{env `GIT_HASH`}}",
+    "git_tag": "{{env `GIT_TAG`}}"
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -22,6 +23,7 @@
     }],
     "tags": {
       "git_hash": "{{user `git_hash`}}",
+      "git_tag": "{{user `git_tag`}}",
       "conjur/app": "conjurops-jenkins-slave"
     }
   }],
