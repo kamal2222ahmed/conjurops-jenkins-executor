@@ -8,6 +8,5 @@ include_recipe 'conjurops-jenkins-slave::_conjur'
 include_recipe 'conjurops-jenkins-slave::_docker'
 include_recipe 'conjurops-jenkins-slave::_lxc'
 include_recipe 'conjurops-jenkins-slave::_chefdk'
-include_recipe 'conjurops-jenkins-slave::_lxc'
 
 include_recipe 'packer'
