@@ -30,8 +30,6 @@ sed -i "s/{{HOST_ID}}/${host_id}/" ${chef_role}
 echo "Running chef-solo role[host-identity]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity/releases/download/${CONJUR_HOST_IDENTITY_VERSION}/conjur-host-identity-${CONJUR_HOST_IDENTITY_VERSION}.tar.gz -o role[host-identity]
 
-echo "Running chef-solo recipe[conjur-ssh]"
-chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${CONJUR_SSH_VERSION}/conjur-ssh-${CONJUR_SSH_VERSION}.tar.gz -o conjur-ssh
 
 echo "Placing jenkins key material"
 chown -R jenkins:jenkins /var/lib/jenkins
@@ -44,5 +42,8 @@ ssh-keygen -y -f id_rsa > authorized_keys
 chown -R jenkins:jenkins $ssh_dir
 chmod 644 id_rsa.pub
 chmod 640 authorized_keys
+
+echo "Running chef-solo recipe[conjur-ssh]"
+chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${CONJUR_SSH_VERSION}/conjur-ssh-${CONJUR_SSH_VERSION}.tar.gz -o conjur-ssh
 
 echo "All set!"
