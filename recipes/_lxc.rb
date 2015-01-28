@@ -1,4 +1,4 @@
-if node["platform"] == "ubuntu" and node["platform_version"].to_f < 14.10
+if node["platform"] == "ubuntu" and node["platform_version"].to_f < 14.04
   apt_repository "ubuntu-lxc" do
     uri "http://ppa.launchpad.net/ubuntu-lxc/stable/ubuntu"
     distribution node['lsb']['codename']
