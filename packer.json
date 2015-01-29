@@ -19,6 +19,7 @@
     "launch_block_device_mappings": [{
       "device_name": "/dev/sda1",
       "snapshot_id": "snap-1f806dbb",
+      "delete_on_termination": true,
       "volume_size": 120
     }],
     "tags": {
