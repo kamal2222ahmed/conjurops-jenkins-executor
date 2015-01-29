@@ -26,56 +26,33 @@ if not (node["virtualization"] || {})["system"] == 'lxc'
   end
 end
 
+bash "install knife-solo gem to chefdk" do
+  user "root"
+  code "/opt/chefdk/embedded/bin/gem install knife-solo"
+end
+
 # This gives no any secure, wildcard in sudoers doesn't work securely
 # So, what about password less sudo for jenkins user?
 
-%w(lxc-attach lxc-destroy lxc-start-ephemeral lxc-autostart lxc-device lxc-stop lxc-cgroup lxc-execute lxc-top lxc-checkconfig lxc-freeze lxc-unfreeze lxc-checkpoint lxc-info lxc-unshare lxc-clone lxc-ls lxc-usernsexec lxc-config lxc-monitor lxc-wait lxc-console lxc-snapshot lxc-create lxc-start).each do |cmd|
-  sudo cmd do
-    user     "%sudo"
-    runas    "root"
-    nopasswd true
-    commands ["/usr/bin/#{cmd} *"]
-  end
+lxc_commands = %w(lxc-attach lxc-destroy lxc-start-ephemeral lxc-autostart lxc-device lxc-stop lxc-cgroup lxc-execute lxc-top lxc-checkconfig lxc-freeze lxc-unfreeze lxc-checkpoint lxc-info lxc-unshare lxc-clone lxc-ls lxc-usernsexec lxc-config lxc-monitor lxc-wait lxc-console lxc-snapshot lxc-create lxc-start).map do |cmd|
+  "/usr/bin/#{cmd} *"
 end
 
-sudo 'lxc--mkdir1' do
-  user     "%sudo"
+sudo 'jenkins-lxc' do
+  user     "%jenkins"
   runas    "root"
   nopasswd true
-  commands ["/bin/mkdir /var/lib/lxc/*/rootfs/*"]
+  commands lxc_commands
 end
 
-sudo 'lxc--mkdir2' do
-  user     "%sudo"
+sudo 'jenkins-lxc--support' do
+  user     "%jenkins"
   runas    "root"
   nopasswd true
-  commands ["/bin/mkdir -p /var/lib/lxc/*/rootfs/*"]
-end
-
-sudo 'lxc--chmod1' do
-  user     "%sudo"
-  runas    "root"
-  nopasswd true
-  commands ["/bin/chmod -R 0440 /var/lib/lxc/*/rootfs/*"]
-end
-
-sudo 'lxc--chmod2' do
-  user     "%sudo"
-  runas    "root"
-  nopasswd true
-  commands ["/bin/chmod 0755 /var/lib/lxc/*/rootfs/*"]
-end
-
-sudo 'lxc--tee1' do
-  user     "%sudo"
-  runas    "root"
-  nopasswd true
-  commands ["/usr/bin/tee /var/lib/lxc/*/rootfs/*"]
-end
-
-sudo 'lxc--tee2' do
-  user     "%sudo"
-  runas    "root"
-  nopasswd true
-  commands ["/usr/bin/tee --append /var/lib/lxc/*/fstab"]
+  commands ["/bin/mkdir /var/lib/lxc/*/rootfs/*",
+            "/bin/mkdir -p /var/lib/lxc/*/rootfs/*",
+            "/bin/chmod -R 0440 /var/lib/lxc/*/rootfs/*",
+            "/bin/chmod 0755 /var/lib/lxc/*/rootfs/*",
+            "/usr/bin/tee /var/lib/lxc/*/rootfs/*",
+            "/usr/bin/tee --append /var/lib/lxc/*/fstab"]
 end
