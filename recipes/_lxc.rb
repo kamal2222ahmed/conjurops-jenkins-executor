@@ -53,6 +53,6 @@ sudo 'jenkins-lxc--support' do
             "/bin/mkdir -p /var/lib/lxc/*/rootfs/*",
             "/bin/chmod -R 0440 /var/lib/lxc/*/rootfs/*",
             "/bin/chmod 0755 /var/lib/lxc/*/rootfs/*",
-            "/usr/bin/tee /var/lib/lxc/*/rootfs/*",
+            "/usr/bin/tee --append /var/lib/lxc/*/rootfs/*",
             "/usr/bin/tee --append /var/lib/lxc/*/fstab"]
 end
