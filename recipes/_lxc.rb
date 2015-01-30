@@ -28,7 +28,14 @@ end
 
 bash "install knife-solo gem to chefdk" do
   user "root"
-  code "/opt/chefdk/embedded/bin/gem install knife-solo"
+  code "sudo -i -u jenkins /opt/chefdk/embedded/bin/gem install knife-solo"
+  not_if "find /var/lib/jenkins/.chefdk | grep knife-solo"
+end
+
+bash "add gem bin dir to PATH" do
+  user "root"
+  code "echo 'export PATH=$PATH:/var/lib/jenkins/.chefdk/gem/ruby/2.1.0/bin' >> /var/lib/jenkins/.profile"
+  not_if "grep '/var/lib/jenkins/.chefdk/gem' /var/lib/jenkins/.profile"
 end
 
 # This gives no any secure, wildcard in sudoers doesn't work securely
@@ -53,6 +60,8 @@ sudo 'jenkins-lxc--support' do
             "/bin/mkdir -p /var/lib/lxc/*/rootfs/*",
             "/bin/chmod -R 0440 /var/lib/lxc/*/rootfs/*",
             "/bin/chmod 0755 /var/lib/lxc/*/rootfs/*",
+            "/bin/chown ubuntu\\:ubuntu -R /var/lib/lxc/*/rootfs/*",
             "/usr/bin/tee --append /var/lib/lxc/*/rootfs/*",
-            "/usr/bin/tee --append /var/lib/lxc/*/fstab"]
+            "/usr/bin/tee --append /var/lib/lxc/*/fstab",
+            "/usr/bin/knife *"]
 end
