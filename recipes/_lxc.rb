@@ -63,5 +63,6 @@ sudo 'jenkins-lxc--support' do
             "/bin/chown ubuntu\\:ubuntu -R /var/lib/lxc/*/rootfs/*",
             "/usr/bin/tee --append /var/lib/lxc/*/rootfs/*",
             "/usr/bin/tee --append /var/lib/lxc/*/fstab",
-            "/usr/bin/knife *"]
+            "/usr/bin/knife *",
+            "/bin/tar *"]
 end
