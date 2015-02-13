@@ -2,9 +2,9 @@
   "name": "host-identity",
   "default_attributes": {
     "conjur": {
-      "host_factory_token": "{{HOST_TOKEN}}",
+      "host_factory_token": "%%HOST_TOKEN%%",
       "host_identity": {
-        "id": "ec2/{{HOST_ID}}"
+        "id": "ec2/%%HOST_ID%%"
       },
       "configuration": {
         "appliance_url": "<%= @appliance_url %>",

@@ -16,11 +16,6 @@ template '/var/chef/roles/host-identity.json' do
   })
 end
 
-cookbook_file '/opt/conjur-bootstrap.sh' do
-  source 'conjur-bootstrap.sh'
-  mode '0755'
-end
-
 # Use append so that the group members aren't clobbered, in case
 # the conjur group is previously created with some other members.
 group 'conjur' do

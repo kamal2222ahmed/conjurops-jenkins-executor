@@ -14,8 +14,8 @@
 
 set -e
 
-host_token=$1
-host_id=$2
+host_token={{ref('HostFactoryToken')}}
+host_id=$(curl http://169.254.169.254/latest/meta-data/instance-id)
 chef_role=/var/chef/roles/host-identity.json
 
 CONJUR_HOST_IDENTITY_VERSION=v1.0.1
@@ -24,12 +24,11 @@ CONJUR_SSH_VERSION=v1.2.5
 export HOME=/root
 
 echo "Inserting hostfactory token and ID into $chef_role"
-sed -i "s/{{HOST_TOKEN}}/${host_token}/" ${chef_role}
-sed -i "s/{{HOST_ID}}/${host_id}/" ${chef_role}
+sed -i "s/%%HOST_TOKEN%%/${host_token}/" ${chef_role}
+sed -i "s/%%HOST_ID%%/${host_id}/" ${chef_role}
 
 echo "Running chef-solo role[host-identity]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity/releases/download/${CONJUR_HOST_IDENTITY_VERSION}/conjur-host-identity-${CONJUR_HOST_IDENTITY_VERSION}.tar.gz -o role[host-identity]
-
 
 echo "Placing jenkins key material"
 chown -R jenkins:jenkins /var/lib/jenkins
@@ -45,5 +44,14 @@ chmod 640 authorized_keys
 
 echo "Running chef-solo recipe[conjur-ssh]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${CONJUR_SSH_VERSION}/conjur-ssh-${CONJUR_SSH_VERSION}.tar.gz -o conjur-ssh
+
+echo "Setting up loggly"
+loggly_pass=$(/opt/conjur/bin/conjur variable value loggly.com/password)
+curl -O https://www.loggly.com/install/configure-linux.sh
+bash configure-linux.sh -a conjur -u conjur -p ${loggly_pass}
+
+# Add the tags 'jenkins' and 'slave' to make log searching easier
+sed -i 's/] %msg%/ tag=\\\"jenkins\\\" tag=\\\"slave\\\"] %msg%/g' /etc/rsyslog.d/22-loggly.conf
+service rsyslog restart
 
 echo "All set!"
