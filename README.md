@@ -70,8 +70,8 @@ This will create an instance, converge the `conjurops-jenkins-slave` on it,
 create the AMI and destroy the source instance. All events are output to stdout
 by packer.
 
-After creating a new AMI, update the `AMI ID` field for the `Ubuntu14.04 with Docker` slave
-in [Jenkins config](http://jenkins.conjur.net:8080/configure) and relaunch the slave.
+Refer to the [cloudformation doc](cloudformation/README.md) on how to apply
+this new AMI to the `jenkins-slave-cluster` stack.
 
 ## Creating a one-off slave
 
