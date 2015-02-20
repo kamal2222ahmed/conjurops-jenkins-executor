@@ -8,6 +8,7 @@ end
 package 'git'
 package 'openjdk-6-jdk'
 package 'vim'
+package 'dnsutils'
 
 include_recipe 'conjurops-jenkins-slave::_user'
 include_recipe 'conjurops-jenkins-slave::_conjur'
