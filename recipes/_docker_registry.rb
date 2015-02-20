@@ -10,8 +10,9 @@ template "#{sites_available}/registry.conf" do
   source "registry.conf"
   mode "0644"
   variables({
-    :appliance_url => node['registry']['appliance-url'],
-    :registry_url => node['registry']['registry-host']
+    :local_hostname => node['docker-registry']['local-hostname-ci'],
+    :appliance_url => node['docker-registry']['appliance-url'],
+    :registry_url_ci => node['docker-registry']['registry-url-ci']
   })
   notifies :create, "link[#{sites_enabled}/registry.conf]", :immediately
   notifies :restart, "service[nginx]", :delayed
@@ -23,14 +24,14 @@ template "#{conf_d}/lua.conf" do
   source "lua.conf"
   mode "0644"
   variables({
-    :home => node['registry']['home'],
-    :appliance_url => node['registry']['appliance-url'],
-    :netrc_path => node['registry']['netrc-path']
+    :home => node['docker-registry']['home'],
+    :appliance_url => node['docker-registry']['appliance-url'],
+    :netrc_path => node['docker-registry']['netrc-path']
   })
   notifies :restart, "service[nginx]", :delayed
 end
 
-registry_home = node['registry']['home']
+registry_home = node['docker-registry']['home']
 
 directory registry_home do
   owner "root"
@@ -41,7 +42,7 @@ directory registry_home do
 end
 
 git registry_home do
-  repository node['registry']['nginx-lua.git']
-  revision node['registry']['nginx-lua.git-revision']
+  repository node['docker-registry']['nginx-lua.git']
+  revision node['docker-registry']['nginx-lua.git-revision']
   action :sync
 end
