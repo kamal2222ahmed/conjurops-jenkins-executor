@@ -52,6 +52,9 @@ bash configure-linux.sh -a conjur -u conjur -p ${loggly_pass}
 
 # Add the tags 'jenkins' and 'slave' to make log searching easier
 sed -i 's/] %msg%/ tag=\\\"jenkins\\\" tag=\\\"slave\\\"] %msg%/g' /etc/rsyslog.d/22-loggly.conf
+
 service rsyslog restart
+
+service nginx restart
 
 echo "All set!"
