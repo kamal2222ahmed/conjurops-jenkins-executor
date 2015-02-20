@@ -8,3 +8,14 @@ default['conjur']['configuration']['ssl_certificate'] = "-----BEGIN CERTIFICATE-
 
 default['packer']['version'] = 'packer_0.7.5'
 default['packer']['checksum'] = '8fab291c8cc988bd0004195677924ab6846aee5800b6c8696d71d33456701ef6'
+
+default['nginx']['sites-enabled'] = '/etc/nginx/sites-enabled/'
+default['nginx']['sites-available'] = '/etc/nginx/sites-available/'
+default['nginx']['conf.d'] = '/etc/nginx/conf.d'
+
+default['registry']['home'] = '/opt/nginx-registry/conjur'
+default['registry']['nginx-lua.git'] = 'https://github.com/conjurinc/nginx-lua.git'
+default['registry']['nginx-lua.git-revision'] = 'a5a183960f398339625bee5acc52350a3a3fc5d2'
+default['registry']['appliance-url'] = 'https://conjur-master.itp.conjur.net/api/authn'
+default['registry']['netrc-path'] = '/etc/conjur.identity'
+default['registry']['registry-host'] = 'https://docker-registry.itci.conjur.net'
