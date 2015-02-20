@@ -17,6 +17,5 @@ include_recipe 'conjurops-jenkins-slave::_lxc'
 include_recipe 'conjurops-jenkins-slave::_dnsmasq'
 include_recipe 'conjurops-jenkins-slave::_nginx'
 include_recipe 'conjurops-jenkins-slave::_registry'
-include_recipe 'conjurops-jenkins-slave::_sshd_disable'
 
 include_recipe 'packer'
