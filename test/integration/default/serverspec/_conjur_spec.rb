@@ -10,13 +10,7 @@ describe 'conjurops-jenkins-slave::_conjur' do
 
     expect(file(role)).to be_file
     expect(file(role).content).to match /"account": "conjurops"/
-    expect(file(role).content).to match /ec2\/{{HOST_ID}}/
-    expect(file(role).content).to match /{{HOST_TOKEN}}/
-  end
-
-  it 'places the conjur-bootstrap script' do
-    bootstrap = '/opt/conjur-bootstrap.sh'
-
-    expect(file(bootstrap)).to be_executable
+    expect(file(role).content).to match /ec2\/%%HOST_ID%%/
+    expect(file(role).content).to match /%%HOST_TOKEN%%/
   end
 end
