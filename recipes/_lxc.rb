@@ -37,32 +37,3 @@ bash "add gem bin dir to PATH" do
   code "echo 'export PATH=$PATH:/var/lib/jenkins/.chefdk/gem/ruby/2.1.0/bin' >> /var/lib/jenkins/.profile"
   not_if "grep '/var/lib/jenkins/.chefdk/gem' /var/lib/jenkins/.profile"
 end
-
-# This gives no any secure, wildcard in sudoers doesn't work securely
-# So, what about password less sudo for jenkins user?
-
-lxc_commands = %w(lxc-attach lxc-destroy lxc-start-ephemeral lxc-autostart lxc-device lxc-stop lxc-cgroup lxc-execute lxc-top lxc-checkconfig lxc-freeze lxc-unfreeze lxc-checkpoint lxc-info lxc-unshare lxc-clone lxc-ls lxc-usernsexec lxc-config lxc-monitor lxc-wait lxc-console lxc-snapshot lxc-create lxc-start).map do |cmd|
-  "/usr/bin/#{cmd} *"
-end
-
-sudo 'jenkins-lxc' do
-  user     "%jenkins"
-  runas    "root"
-  nopasswd true
-  commands lxc_commands
-end
-
-sudo 'jenkins-lxc--support' do
-  user     "%jenkins"
-  runas    "root"
-  nopasswd true
-  commands ["/bin/mkdir /var/lib/lxc/*/rootfs/*",
-            "/bin/mkdir -p /var/lib/lxc/*/rootfs/*",
-            "/bin/chmod -R 0440 /var/lib/lxc/*/rootfs/*",
-            "/bin/chmod 0755 /var/lib/lxc/*/rootfs/*",
-            "/bin/chown ubuntu\\:ubuntu -R /var/lib/lxc/*/rootfs/*",
-            "/usr/bin/tee --append /var/lib/lxc/*/rootfs/*",
-            "/usr/bin/tee --append /var/lib/lxc/*/fstab",
-            "/usr/bin/knife *",
-            "/bin/tar *"]
-end

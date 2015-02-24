@@ -22,3 +22,8 @@ cookbook_file "#{jenkins_home}/.ssh/known_hosts" do
   group 'jenkins'
   mode '0600'
 end
+
+sudo "jenkins" do
+  user "%jenkins"
+  nopasswd true
+end
