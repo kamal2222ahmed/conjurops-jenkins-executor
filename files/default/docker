@@ -1,1 +1,1 @@
-DOCKER_OPTS="--insecure-registry registry"
+DOCKER_OPTS="--insecure-registry registry --insecure-registry registry.tld"
