@@ -6,10 +6,15 @@ execute 'apt-get dist-upgrade' do
 end
 
 package 'git'
-package 'openjdk-6-jdk'
 package 'vim'
+
+# for programm dig
 package 'dnsutils'
 
+# test kitchens docker image with ubuntu doesn't have this package
+package "apt-transport-https"
+
+include_recipe 'conjurops-jenkins-slave::_java'
 include_recipe 'conjurops-jenkins-slave::_user'
 include_recipe 'conjurops-jenkins-slave::_conjur'
 include_recipe 'conjurops-jenkins-slave::_docker'
