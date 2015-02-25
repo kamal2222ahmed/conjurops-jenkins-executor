@@ -12,6 +12,7 @@ boxes = [
     :name => :clean,
     :primary => false,
     :autostart => false,
+    :memory => 2048,
     :recipes => []
   },
   # Jenkins slave box
@@ -32,7 +33,7 @@ Vagrant.configure("2") do |baseconfig|
       config.ssh.forward_agent = true
 
       config.vm.provider :virtualbox do |vbox, override|
-        vbox.memory = 1024
+        vbox.memory = opts[:memory] || 1024
       end
 
       config.vm.provision :chef_solo do |chef|
