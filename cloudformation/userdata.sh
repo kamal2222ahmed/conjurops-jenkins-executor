@@ -48,6 +48,11 @@ chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${
 # restart nginx for turnon docker registry
 service nginx restart
 
+# Ensure /dev/urandom exists, loggly script uses it
+if [ ! -f /dev/urandom ]; then
+  cd /dev && /sbin/MAKEDEV urandom && cd ..
+fi
+
 echo "Setting up loggly"
 export LINUX_DO_VERIFICATION=false # I haven't any ideas what to do with this schlock - it very annoying me, so, just turn of verification step where invokes: https://www.pivotaltracker.com/story/show/89088980
 loggly_pass=$(/opt/conjur/bin/conjur variable value loggly.com/password)
