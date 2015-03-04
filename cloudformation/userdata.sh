@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# ./conjur-bootstrap
 #
 # Bootstraps a Jenkins slave using Conjur hostfactory
 #
@@ -54,10 +53,10 @@ if [ ! -f /dev/urandom ]; then
 fi
 
 echo "Setting up loggly"
-export LINUX_DO_VERIFICATION=false # I haven't any ideas what to do with this schlock - it very annoying me, so, just turn of verification step where invokes: https://www.pivotaltracker.com/story/show/89088980
+export LINUX_DO_VERIFICATION="false"
 loggly_pass=$(/opt/conjur/bin/conjur variable value loggly.com/password)
 curl -O https://www.loggly.com/install/configure-linux.sh
-bash configure-linux.sh -a conjur -u conjur -p ${loggly_pass}
+bash configure-linux.sh -s -a conjur -u conjur -p ${loggly_pass}
 
 # Add the tags 'jenkins' and 'slave' to make log searching easier
 sed -i 's/] %msg%/ tag=\\\"jenkins\\\" tag=\\\"slave\\\"] %msg%/g' /etc/rsyslog.d/22-loggly.conf
