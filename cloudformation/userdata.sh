@@ -47,19 +47,12 @@ chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${
 # restart nginx for turnon docker registry
 service nginx restart
 
-# Ensure /dev/urandom exists, loggly script uses it
-if [ ! -f /dev/urandom ]; then
-  cd /dev && /sbin/MAKEDEV urandom && cd ..
-fi
-
 echo "Setting up loggly"
-export LINUX_DO_VERIFICATION="false"
-loggly_pass=$(/opt/conjur/bin/conjur variable value loggly.com/password)
-curl -O https://www.loggly.com/install/configure-linux.sh
-bash configure-linux.sh -s -a conjur -u conjur -p ${loggly_pass}
-
-# Add the tags 'jenkins' and 'slave' to make log searching easier
-sed -i 's/] %msg%/ tag=\\\"jenkins\\\" tag=\\\"slave\\\"] %msg%/g' /etc/rsyslog.d/22-loggly.conf
+loggly_token=$(/opt/conjur/bin/conjur variable value loggly.com/api-token)
+cat << LOGGLY_CONF > /etc/rsyslog.d/22-loggly.conf
+\$template LogglyFormat,"<%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [${loggly_token}@41058 tag=\"jenkins\" tag=\"slave\"] %msg%\n"
+*.*             @@logs-01.loggly.com:514;LogglyFormat
+LOGGLY_CONF
 
 service rsyslog restart
 
