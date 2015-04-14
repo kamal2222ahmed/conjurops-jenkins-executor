@@ -1,15 +1,20 @@
-remote_file '/tmp/chefdk.deb' do
-  source 'https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.3.5-1_amd64.deb'
-  checksum 'a81c3dfad698fbb19a6c8e3dd65f04a15fd58a811d99db9c47e5a93e368f341d'
+file_name = 'chefdk.deb'
+target_path = File.join(Chef::Config[:file_cache_path], file_name)
+
+remote_file target_path do
+  source node['chefdk']['url']
+  checksum node['chefdk']['sha256']
 end
 
 dpkg_package 'chefdk' do
-  source '/tmp/chefdk.deb'
-  action :install
+  source target_path
 end
 
-execute 'install the kitchen-docker driver into ChefDK' do
-  command 'chef gem install kitchen-docker --no-user-install'
+execute 'install the kitchen drivers into ChefDK' do
+  command <<-EOH
+  chef gem install kitchen-docker --no-user-install
+  chef gem install kitchen-ec2 --no-user-install
+  EOH
 
   not_if 'chef gem list | grep kitchen-docker'
 end
