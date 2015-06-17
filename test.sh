@@ -1,5 +1,7 @@
 #!/bin/bash
 
+rm -rf .kitchen
+
 export KITCHEN_LOCAL_YAML=.kitchen.ci.yml
 
 summon -f secrets.ci.yml kitchen converge
