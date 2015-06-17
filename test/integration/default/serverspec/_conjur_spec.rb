@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'conjurops-jenkins-slave::_conjur' do
   it 'installs the conjur CLI' do
-    expect(command('/opt/conjur/bin/conjur help').stdout).to match /COMMANDS/
+    expect(command('conjur help').stdout).to match /COMMANDS/
   end
 
   it 'places the Chef role to bootstrap host-factory' do

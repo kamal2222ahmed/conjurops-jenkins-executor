@@ -1,12 +1,4 @@
----
-driver_plugin: docker
-
-driver_config:
-  use_sudo: false
-  privileged: true
-  socket: <%= ENV['DOCKER_HOST'] || 'unix:///var/run/docker.sock' %>
-  volume:
-  - <%= ENV['PWD'] %>:/home/kitchen/project
+driver: vagrant
 
 provisioner:
   name: chef_zero

@@ -1,6 +1,6 @@
 default['jenkins']['home'] = '/var/lib/jenkins'
 
-default['conjur']['version'] = '4.18.0-1'
+default['conjur']['version'] = '4.25.1-1'
 default['conjur']['configuration']['account'] = 'conjurops'
 default['conjur']['configuration']['appliance_url'] = 'https://conjur-master.itp.conjur.net/api'
 default['conjur']['configuration']['plugins'] = []
@@ -20,3 +20,5 @@ default['docker-registry']['nginx-lua.git-revision'] = '775d4b7f7b0655a8955c626a
 default['docker-registry']['appliance-url'] = 'https://conjur-master.itp.conjur.net/api/authn'
 default['docker-registry']['netrc-path'] = '/etc/conjur.identity'
 default['docker-registry']['registry-url-ci'] = 'https://docker-registry.itci.conjur.net'
+
+default['summon']['version'] = '0.1.2'
