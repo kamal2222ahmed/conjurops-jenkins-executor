@@ -55,12 +55,19 @@ When you're all done run `kitchen destroy` to remove the container.
 
 ### Setup
 
-Install [packer](https://www.packer.io/) and run `conjur env check` to ensure you have
-access to the AWS credentials.
+Install [packer](https://www.packer.io/) and Summon.
 
 We create an AMI for this slave so Jenkins can launch it via the Jenkins-EC2 plugin.
 
-To build a new AMI run
+To run the official test suite (using `kitchen-ec2`):
+
+```
+./test.sh
+```
+
+(Or, let Jenkins do the work for you).
+
+Then build the AMI with:
 
 ```
 ./packer.sh

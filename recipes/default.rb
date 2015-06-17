@@ -17,6 +17,7 @@ package "apt-transport-https"
 include_recipe 'conjurops-jenkins-slave::_java'
 include_recipe 'conjurops-jenkins-slave::_user'
 include_recipe 'conjurops-jenkins-slave::_conjur'
+include_recipe 'conjurops-jenkins-slave::_summon'
 include_recipe 'conjurops-jenkins-slave::_docker'
 include_recipe 'conjurops-jenkins-slave::_chefdk'
 include_recipe 'conjurops-jenkins-slave::_lxc'
