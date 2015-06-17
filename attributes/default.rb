@@ -13,8 +13,9 @@ default['nginx']['sites-enabled'] = '/etc/nginx/sites-enabled/'
 default['nginx']['sites-available'] = '/etc/nginx/sites-available/'
 default['nginx']['conf.d'] = '/etc/nginx/conf.d'
 
-default['chefdk']['url'] = 'https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.4.0-1_amd64.deb'
-default['chefdk']['sha256'] = 'e135c0719fc80fc7b95560e90839103167308a45d4927cf8da9c22bdc385cc7d'
+default['chefdk']['url'] = 'https://opscode-omnibus-packages.s3.amazonaws.com/ubuntu/12.04/x86_64/chefdk_0.6.2-1_amd64.deb'
+# boo-hoo, only sha1 is available on the website now
+# default['chefdk']['sha256'] = ''
 
 default['docker-registry']['local-hostname-ci'] = 'registry'
 default['docker-registry']['home'] = '/opt/nginx-registry/conjur'

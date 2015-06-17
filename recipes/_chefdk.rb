@@ -3,7 +3,6 @@ target_path = File.join(Chef::Config[:file_cache_path], file_name)
 
 remote_file target_path do
   source node['chefdk']['url']
-  checksum node['chefdk']['sha256']
 end
 
 dpkg_package 'chefdk' do
