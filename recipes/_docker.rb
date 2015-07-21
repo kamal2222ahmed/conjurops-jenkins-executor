@@ -18,7 +18,7 @@ end
 
 group 'docker' do
   append true
-  members ['jenkins']
+  members [node['user']['username']]
   action :modify
 end
 

@@ -10,7 +10,7 @@ describe 'conjurops-jenkins-slave::default' do
   end
 
   it 'installs the Java 8 JDK' do
-    expect(command('javac -version').stdout).to match /javac 1.8/
+    expect(command('javac -version').stderr).to match /javac 1.8/
   end
 
   it 'installs packer' do

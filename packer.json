@@ -28,17 +28,23 @@
       "conjur/app": "conjurops-jenkins-slave"
     }
   }],
-  "provisioners": [{
-    "type": "chef-solo",
-    "cookbook_paths": [".vendor/cookbooks"],
-    "run_list": ["conjurops-jenkins-slave"]
-  },
-  {
-    "type": "shell",
-    "inline": [
-      "sudo apt-get purge -y chef",
-      "sudo rm -rf /opt/chef",
-      "sudo dpkg-reconfigure chefdk"
-    ]
-  }]
+  "provisioners": [
+    {
+      "type": "shell-local",
+      "command": "make builder_tarball"
+    },
+    {
+      "type": "chef-solo",
+      "cookbook_paths": [".vendor/cookbooks"],
+      "run_list": ["conjurops-jenkins-slave::default"]
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get purge -y chef",
+        "sudo rm -rf /opt/chef",
+        "sudo dpkg-reconfigure chefdk"
+      ]
+    }
+  ]
 }

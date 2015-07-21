@@ -5,8 +5,8 @@ describe 'conjurops-jenkins-slave::_conjur' do
     expect(command('conjur help').stdout).to match /COMMANDS/
   end
 
-  it 'places the Chef role to bootstrap host-factory' do
-    role = '/var/chef/roles/host-identity.json'
+  it 'places the JSON file to bootstrap host-factory' do
+    role = '/var/conjur/host-identity.json'
 
     expect(file(role)).to be_file
     expect(file(role).content).to match /"account": "conjurops"/

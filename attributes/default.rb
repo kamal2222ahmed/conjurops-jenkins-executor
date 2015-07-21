@@ -1,4 +1,5 @@
-default['jenkins']['home'] = '/var/lib/jenkins'
+default['user']['username'] = 'jenkins'
+default['user']['home'] = File.join('', 'var', 'lib', node['user']['username'])
 
 default['conjur']['version'] = '4.25.1-1'
 default['conjur']['configuration']['account'] = 'conjurops'
@@ -26,3 +27,6 @@ default['docker-registry']['netrc-path'] = '/etc/conjur.identity'
 default['docker-registry']['registry-url-ci'] = 'https://docker-registry.itci.conjur.net'
 
 default['summon']['version'] = '0.1.2'
+
+default['pubbit']['repo'] = 'git@github.com:conjurinc/pubbit'
+default['pubbit']['home'] = '/opt/pubbit'

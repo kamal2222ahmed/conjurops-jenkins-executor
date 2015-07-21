@@ -1,5 +1,13 @@
-driver: vagrant
+driver:
+  name: vagrant
 
+transport:
+  forward_agent: true
+  
+driver_config:
+  ssh:
+    forward_agent: true
+  
 provisioner:
   name: chef_zero
 

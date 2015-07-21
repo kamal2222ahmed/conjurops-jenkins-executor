@@ -1,19 +1,14 @@
 {
-  "name": "host-identity",
-  "default_attributes": {
-    "conjur": {
-      "host_factory_token": "%%HOST_TOKEN%%",
-      "host_identity": {
-        "id": "ec2/%%HOST_ID%%"
-      },
-      "configuration": {
-        "appliance_url": "<%= @appliance_url %>",
-        "account": "<%= @account %>",
-        "ssl_certificate": "<%= @ssl_certificate.split("\n").join("\\n") %>"
-      }
+  "conjur": {
+    "host_factory_token": "%%HOST_TOKEN%%",
+    "host_identity": {
+      "id": "ec2/%%HOST_ID%%"
+    },
+    "configuration": {
+      "appliance_url": "<%= @appliance_url %>",
+      "account": "<%= @account %>",
+      "ssl_certificate": "<%= @ssl_certificate.split("\n").join("\\n") %>"
     }
   },
-  "json_class": "Chef::Role",
-  "chef_type": "role",
   "run_list": "conjur-host-identity"
 }
