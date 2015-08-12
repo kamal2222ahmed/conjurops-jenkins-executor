@@ -1,3 +1,7 @@
+execute "install aufs" do
+  command "apt-get install -y linux-image-extra-#{node[:kernel][:release]} && modprobe aufs"
+end
+
 apt_repository "docker" do
   uri "https://get.docker.com/ubuntu"
   distribution "docker"
