@@ -44,7 +44,7 @@ Vagrant.configure("2") do |baseconfig|
       
       config.vm.synced_folder ".", "/vagrant", disabled: true
       
-      config.vm.box = 'ubuntu/trusty64'
+      config.vm.box = 'phusion/ubuntu-14.04-amd64'
       config.vm.network 'private_network', :type => 'dhcp'
       
       config.ssh.forward_agent = true
@@ -59,9 +59,8 @@ Vagrant.configure("2") do |baseconfig|
         aws.access_key_id = ENV['AWS_ACCESS_KEY_ID']
         aws.secret_access_key = ENV['AWS_SECRET_ACCESS_KEY']
         
-        aws.ami = 'ami-9eaa1cf6'
+        aws.ami = ENV['AWS_BASE_AMI']
         aws.instance_type="m3.medium"
-        aws.block_device_mapping = [{'DeviceName' => '/dev/sda1', 'Ebs.SnapshotId' => 'snap-1f806dbb', 'Ebs.DeleteOnTermination' => true, 'Ebs.VolumeSize' => 120}]
         aws.tags = {'git_hash' => ENV['GIT_HASH'], 'git_tag' => ENV['GIT_TAG']}.merge(opts[:tags] || {})
 
         aws.keypair_name = ENV['AWS_KEYPAIR_NAME']

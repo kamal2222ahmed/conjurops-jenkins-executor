@@ -2,8 +2,6 @@
 
 rm -rf .kitchen
 
-export KITCHEN_LOCAL_YAML=.kitchen.ci.yml
-
 kitchen converge
 kitchen verify
 sleep 10

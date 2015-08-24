@@ -12,7 +12,7 @@ provisioner:
   name: chef_zero
 
 platforms:
-- name: ubuntu-14.04
+- name: phusion/ubuntu-14.04-amd64
 
 suites:
   - name: default
