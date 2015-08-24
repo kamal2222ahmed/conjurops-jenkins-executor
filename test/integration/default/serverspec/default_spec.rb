@@ -16,4 +16,18 @@ describe 'conjurops-jenkins-slave::default' do
   it 'installs packer' do
     expect(command('packer version').stdout).to match /Packer v0.7.5/
   end
+  
+  it 'installs Vagrant' do
+    expect(command('vagrant version').stdout).to match /Installed Version: 1.7/
+  end
+
+  it 'installs vagrant-aws for jenkins' do
+    expect(command('sudo -i -u jenkins vagrant plugin list').stdout).to match /vagrant-aws/
+  end
+  
+  it 'installs vagrant-ami for jenkins' do
+    expect(command('sudo -i -u jenkins vagrant plugin list').stdout).to match /vagrant-ami/
+  end
+  
+    
 end
