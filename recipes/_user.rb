@@ -1,29 +1,31 @@
-jenkins_home = node['jenkins']['home']
+username = node['user']['username']
+user_home = node['user']['home']
 
-user 'jenkins' do
-  home jenkins_home
+user username do
+  home user_home
   shell '/bin/bash'
   supports manage_home: true
 end
 
-group 'jenkins' do
-  members ['jenkins']
+group_name = username
+group group_name do
+  members [username]
 end
 
-directory "#{jenkins_home}/.ssh" do
-  owner 'jenkins'
-  group 'jenkins'
+directory "#{user_home}/.ssh" do
+  owner username
+  group group_name
   mode '0700'
 end
 
-cookbook_file "#{jenkins_home}/.ssh/known_hosts" do
+cookbook_file "#{user_home}/.ssh/known_hosts" do
   source 'known_hosts'
-  owner 'jenkins'
-  group 'jenkins'
+  owner username
+  group group_name
   mode '0600'
 end
 
-sudo "jenkins" do
-  user "%jenkins"
+sudo username do
+  user "%#{group_name}"
   nopasswd true
 end

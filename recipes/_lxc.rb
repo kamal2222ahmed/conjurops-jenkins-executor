@@ -1,3 +1,6 @@
+username = node['user']['username']
+user_home = node['user']['home']
+
 if node["platform"] == "ubuntu" and node["platform_version"].to_f < 14.04
   apt_repository "ubuntu-lxc" do
     uri "http://ppa.launchpad.net/ubuntu-lxc/stable/ubuntu"
@@ -12,7 +15,10 @@ package "lxc"
 
 # better to not try run modprobe inside LXC or Docker env
 # it will not work in any way
-if not (node["virtualization"] || {})["system"] == 'lxc'
+case (node["virtualization"] || {})["system"]
+when 'lxc', 'docker'
+  # do nothing
+else
   bash "modprobe ip6table_filter" do
     user "root"
     code "modprobe ip6table_filter"
@@ -28,12 +34,12 @@ end
 
 bash "install knife-solo gem to chefdk" do
   user "root"
-  code "sudo -i -u jenkins /opt/chefdk/embedded/bin/gem install knife-solo"
-  not_if "find /var/lib/jenkins/.chefdk | grep knife-solo"
+  code "sudo -i -u #{username} /opt/chefdk/embedded/bin/gem install knife-solo"
+  not_if "find #{user_home}/.chefdk | grep knife-solo"
 end
 
 bash "add gem bin dir to PATH" do
   user "root"
-  code "echo 'export PATH=$PATH:/var/lib/jenkins/.chefdk/gem/ruby/2.1.0/bin' >> /var/lib/jenkins/.profile"
-  not_if "grep '/var/lib/jenkins/.chefdk/gem' /var/lib/jenkins/.profile"
+  code "echo 'export PATH=$PATH:#{user_home}/.chefdk/gem/ruby/2.1.0/bin' >> #{user_home}/.profile"
+  not_if "grep '#{user_home}/.chefdk/gem' #{user_home}/.profile"
 end

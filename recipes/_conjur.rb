@@ -3,11 +3,11 @@ package 'ruby-dev'
 
 include_recipe 'conjur-client'
 
-directory '/var/chef/roles' do
+directory '/var/conjur' do
   recursive true
 end
 
-template '/var/chef/roles/host-identity.json' do
+template '/var/conjur/host-identity.json' do
   source "host-identity.erb"
   variables({
     appliance_url: node['conjur']['configuration']['appliance_url'],
@@ -20,5 +20,5 @@ end
 # the conjur group is previously created with some other members.
 group 'conjur' do
   append true
-  members ['jenkins']
+  members [node['user']['username']]
 end

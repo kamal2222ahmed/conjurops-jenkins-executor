@@ -25,7 +25,7 @@ Run the `conjurops-jenkins-slave` recipe.
 ### Setup
 
 Install the [ChefDK](https://downloads.chef.io/chef-dk/) and activate it. You should have docker running locally.
-If you're on OSX, use [boot2docker](https://github.com/boot2docker/osx-installer/releases).
+If you're on OSX, use `docker-machine`, installed as part of the [Docker Toolkbox] (https://www.docker.com/toolbox).
 
 Run `chef exec bundle install` to get the correct test-kitchen driver.
 
@@ -55,14 +55,14 @@ When you're all done run `kitchen destroy` to remove the container.
 
 ### Setup
 
-Install [packer](https://www.packer.io/) and Summon.
+Install [Vagrant](http://www.vagrantup.com/downloads.html/) and [Summon](https://github.com/conjurinc/summon/releases).
 
 We create an AMI for this slave so Jenkins can launch it via the Jenkins-EC2 plugin.
 
 To run the official test suite (using `kitchen-ec2`):
 
 ```
-./test.sh
+summon -f secrets.dev.yml ./test.sh
 ```
 
 (Or, let Jenkins do the work for you).
