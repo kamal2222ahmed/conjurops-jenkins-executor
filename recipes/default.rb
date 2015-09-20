@@ -24,5 +24,8 @@ include_recipe 'conjurops-jenkins-slave::_lxc'
 include_recipe 'conjurops-jenkins-slave::_dnsmasq'
 include_recipe 'conjurops-jenkins-slave::_nginx'
 include_recipe 'conjurops-jenkins-slave::_docker_registry'
+include_recipe 'conjurops-jenkins-slave::_rvm'
 
 include_recipe 'packer'
+include_recipe 'conjurops-jenkins-slave::_vagrant'
+

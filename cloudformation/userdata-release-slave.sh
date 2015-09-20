@@ -32,7 +32,7 @@ chef-solo -r https://github.com/conjur-cookbooks/conjur-host-identity/releases/d
 echo "Running chef-solo recipe[conjur-ssh]"
 chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${CONJUR_SSH_VERSION}/conjur-ssh-${CONJUR_SSH_VERSION}.tar.gz -o conjur-ssh
 
-# restart nginx for turnon docker registry
+# restart nginx to turn on docker registry
 service nginx restart
 
 echo "Setting up loggly"

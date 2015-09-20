@@ -6,7 +6,7 @@ template do
 
   value :AWSTemplateFormatVersion => '2010-09-09'
 
-  value :Description => 'Jenkins slave autoscaling group'
+  value :Description => 'Jenkins release slave autoscaling group'
 
   parameter 'ImageId',
     :Description => 'Base AMI to launch from',
@@ -31,7 +31,7 @@ template do
     :Description => 'WebServer EC2 instance type',
     :Type => 'String',
     :Default => 'm3.medium',
-    :AllowedValues => %w(m3.medium m3.large m3.xlarge),
+    :AllowedValues => %w(m3.medium m3.large),
     :ConstraintDescription => 'must be a valid EC2 instance type.'
 
   resource 'ASG', :Type => 'AWS::AutoScaling::AutoScalingGroup', :Properties => {
@@ -45,7 +45,7 @@ template do
       {
         :Key => 'Name',
         # Grabs a value in an external map file.
-        :Value => 'jenkins-slave',
+        :Value => 'jenkins-release-slave',
         :PropagateAtLaunch => 'true',
       }
     ]
@@ -57,7 +57,7 @@ template do
     :KeyName => 'jenkins-user',
     :SecurityGroups => ['jenkins-slave'],
     # Loads an external userdata script.
-    :UserData => base64(interpolate(file('userdata.sh')))
+    :UserData => base64(interpolate(file('userdata-release-slave.sh')))
   }
 
 end.exec!

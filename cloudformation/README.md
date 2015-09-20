@@ -8,12 +8,20 @@ We then run conversion to JSON in a Docker container.
 
 ```sh-session
 $ docker build -t cloudformation .
-$ docker run -t cloudformation > jenkins-slave.json
+$ docker run --rm cloudformation > jenkins-slave.json
 ```
 
 Create a new stack or update the existing one using 'jenkins-slave.json' at the
-[Cloudformation dashboard](https://console.aws.amazon.com/cloudformation/home?region=us-east-1)
+[CloudFormation dashboard](https://console.aws.amazon.com/cloudformation/home?region=us-east-1)
 for the Conjur CI AWS account.
+
+To run the conversion for the release slave, do
+
+```sh-session
+$ docker run --rm cloudformation ./release-save.rb > release-slave.json
+```
+
+And then create or update the CloudFormation release-slave stack.
 
 ## Updating the cluster instance(s)
 
@@ -21,7 +29,7 @@ When we create a new version of this cookbook we'll want to generate a new AMI
 via packer. This happens [automatically in Jenkins](https://jenkins.conjur.net/job/conjurops-jenkins-slave-image/) on git push.
 
 Once we have an AMI built, we want to update the `jenkins-slave-cluster` stack in the
-Conjur CI AWS [Cloudformation dashboard](https://console.aws.amazon.com/cloudformation/home?region=us-east-1).
+Conjur CI AWS [CloudFormation dashboard](https://console.aws.amazon.com/cloudformation/home?region=us-east-1).
 
 To update to the new AMI:
 
