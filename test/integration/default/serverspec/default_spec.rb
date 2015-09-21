@@ -29,5 +29,9 @@ describe 'conjurops-jenkins-slave::default' do
     expect(command('sudo -i -u jenkins vagrant plugin list').stdout).to match /vagrant-ami/
   end
   
+  it 'installs vagrant-berkshelf for jenkins' do
+    expect(command('sudo -i -u jenkins vagrant plugin list').stdout).to match /berkshelf/
+  end
+  
     
 end
