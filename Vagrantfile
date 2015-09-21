@@ -51,6 +51,7 @@ Vagrant.configure("2") do |baseconfig|
 
       config.vm.provider :virtualbox do |vbox, override|
         vbox.memory = opts[:memory] || 1024
+        config.vm.synced_folder ".", "/vagrant"
       end
 
       config.vm.provider :aws do |aws, override|
