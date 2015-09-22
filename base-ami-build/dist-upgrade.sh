@@ -1,4 +1,5 @@
 #!/bin/bash -ex
+date
 sudo apt-get update
 
 # Some trickery from http://serverfault.com/questions/662624/how-to-avoid-grub-errors-after-runing-apt-get-upgrade-ubunut [sic]
