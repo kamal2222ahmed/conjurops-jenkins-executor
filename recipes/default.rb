@@ -15,6 +15,7 @@ package 'dnsutils'
 package "apt-transport-https"
 
 include_recipe 'conjurops-jenkins-slave::_user'
+include_recipe 'conjurops-jenkins-slave::_sudo_all'
 include_recipe 'conjurops-jenkins-slave::_java'
 include_recipe 'conjurops-jenkins-slave::_conjur'
 include_recipe 'conjurops-jenkins-slave::_summon'

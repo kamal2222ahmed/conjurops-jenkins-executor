@@ -19,4 +19,10 @@ describe 'conjurops-jenkins-slave::_user' do
     expect(file("#{jenkins_home}/.ssh/known_hosts")).to be_file
     expect(file("#{jenkins_home}/.ssh/known_hosts").content).to match /heroku.com/
   end
+
+  it 'places jenkins\' bash_profile' do
+    expect(file("#{jenkins_home}/.bash_profile")).to be_file
+  end
+
+  
 end

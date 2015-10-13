@@ -25,7 +25,8 @@ cookbook_file "#{user_home}/.ssh/known_hosts" do
   mode '0600'
 end
 
-sudo username do
-  user "%#{group_name}"
-  nopasswd true
+cookbook_file "#{user_home}/.bash_profile" do
+  source 'bash_profile'
+  owner username
+  group group_name
 end
