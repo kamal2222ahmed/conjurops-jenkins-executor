@@ -14,7 +14,7 @@ describe 'conjurops-jenkins-slave::default' do
   end
 
   it 'installs packer' do
-    expect(command('packer version').stdout).to match /Packer v0.7.5/
+    expect(command('packer version').stdout).to match /Packer v0.8/
   end
   
   it 'installs Vagrant' do
