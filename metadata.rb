@@ -4,7 +4,7 @@ maintainer_email 'support@conjur.net'
 license          'Restricted'
 description      'Installs/Configures jenkins slave'
 long_description 'Installs/Configures jenkins slave'
-version          '0.4.0'
+version          '0.4.1'
 
 supports 'ubuntu'
 
