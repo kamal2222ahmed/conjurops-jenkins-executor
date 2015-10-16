@@ -13,5 +13,5 @@ default['docker-registry']['appliance-url'] = 'https://conjur-master.itp.conjur.
 default['docker-registry']['netrc-path'] = '/etc/conjur.identity'
 default['docker-registry']['registry-url-ci'] = 'https://docker-registry.itci.conjur.net'
 
-default['pubbit']['repo'] = 'git@github.com:conjurinc/pubbit'
+default['pubbit']['repo'] = 'https://github.com/conjurinc/pubbit.git'
 default['pubbit']['home'] = '/opt/pubbit'
