@@ -6,16 +6,11 @@ template do
 
   value :AWSTemplateFormatVersion => '2010-09-09'
 
-  value :Description => 'Jenkins release slave autoscaling group'
+  value :Description => 'Jenkins release slave instance and DNS record'
 
   parameter 'ImageId',
     :Description => 'Base AMI to launch from',
     :Type => 'String'
-
-  parameter 'DesiredCapacity',
-    :Description => 'Desired number of slaves to launch',
-    :Type => 'String',
-    :Default => '1'
 
   parameter 'HostFactoryToken',
     :Description => 'Conjur hostfactory token to use to launch hosts',
@@ -34,30 +29,34 @@ template do
     :AllowedValues => %w(m3.medium m3.large),
     :ConstraintDescription => 'must be a valid EC2 instance type.'
 
-  resource 'ASG', :Type => 'AWS::AutoScaling::AutoScalingGroup', :Properties => {
-    :AvailabilityZones => ['us-east-1a'],
-    :HealthCheckType => 'EC2',
-    :LaunchConfigurationName => ref('LaunchConfig'),
-    :DesiredCapacity => ref('DesiredCapacity'),
-    :MinSize => 1,
-    :MaxSize => 5,
-    :Tags => [
-      {
-        :Key => 'Name',
-        # Grabs a value in an external map file.
-        :Value => 'jenkins-release-slave',
-        :PropagateAtLaunch => 'true',
-      }
-    ]
-  }
+  parameter 'HostedZone',
+    :Description => 'The DNS name of an existing Amazon Route 53 hosted zone',
+    :Type => 'String'
 
-  resource 'LaunchConfig', :Type => 'AWS::AutoScaling::LaunchConfiguration', :Properties => {
+  resource 'EC2Instance', :Type => 'AWS::EC2::Instance', :Properties => {
     :ImageId => ref('ImageId'),
     :InstanceType => ref('InstanceType'),
     :KeyName => 'jenkins-user',
     :SecurityGroups => ['jenkins-slave'],
     # Loads an external userdata script.
-    :UserData => base64(interpolate(file('userdata-release-slave.sh')))
+    :UserData => base64(interpolate(file('userdata-release-slave.sh'))),
+    :Tags => [
+      {
+        :Key => 'Name',
+        :Value => 'jenkins-release-slave'
+      }
+    ]
   }
+
+  resource 'HostRecord', :Type => 'AWS::Route53::RecordSet', :Properties => {
+    :HostedZoneName => join('', ref('HostedZone'), '.'),
+    :Name => join('', 'release-slave', '.', ref('HostedZone'), '.'),
+    :Type => 'A',
+    :TTL => '900',
+    :ResourceRecords => [get_att('EC2Instance', 'PublicIp')]
+  }
+
+  output 'HostName',
+    :Value => ref('HostRecord')
 
 end.exec!

@@ -4,24 +4,16 @@
 
 We're using the [cloudformation-ruby-dsl](https://github.com/bazaarvoice/cloudformation-ruby-dsl) library to define the CloudFormation stack in Ruby, [jenkins-slave.rb](jenkins-slave.rb).
 
-We then run conversion to JSON in a Docker container.
+We then run conversion to JSON in a Docker container. Fill in `TEMPLATE`.
 
 ```sh-session
 $ docker build -t cloudformation .
-$ docker run --rm cloudformation > jenkins-slave.json
+$ docker run --rm -v $PWD:/app cloudformation ./<TEMPLATE.rb> expand | tee out.json
 ```
 
-Create a new stack or update the existing one using 'jenkins-slave.json' at the
+Create a new stack or update the existing one using 'out.json' at the
 [CloudFormation dashboard](https://console.aws.amazon.com/cloudformation/home?region=us-east-1)
 for the Conjur CI AWS account.
-
-To run the conversion for the release slave, do
-
-```sh-session
-$ docker run --rm cloudformation ./release-save.rb > release-slave.json
-```
-
-And then create or update the CloudFormation release-slave stack.
 
 ## Updating the cluster instance(s)
 
