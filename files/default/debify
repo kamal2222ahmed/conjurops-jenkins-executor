@@ -1,0 +1,50 @@
+#!/bin/bash -e
+
+# Load RVM into a shell session *as a function*
+if [[ -s "$HOME/.rvm/scripts/rvm" ]] ; then
+  # First try to load from a user install
+  source "$HOME/.rvm/scripts/rvm"
+elif [[ -s "/usr/local/rvm/scripts/rvm" ]] ; then
+  # Then try to load from a root install
+  source "/usr/local/rvm/scripts/rvm"
+else
+  printf "ERROR: An RVM installation was not found.\n"
+fi
+
+if [ ! -f Gemfile.lock ]; then
+  echo "No Gemfile.lock found in $PWD"
+  exit 1
+fi
+
+if ! rvm list rubies | grep "ruby-2.1.5"; then rvm install 2.1.5; fi
+rvm use 2.1.5 1>&2
+
+if ! rvm gemset use conjur-debify 1>&2; then
+        rvm use --create 2.1.5@conjur-debify 1>&2
+        gem install -N bundler 1>&2
+fi
+
+version=$(cat << VERSION | ruby
+require 'bundler'
+parser = Bundler::LockfileParser.new File.read('Gemfile.lock')
+puts parser.specs.find{|s| s.name == 'conjur-debify'}.version.version
+VERSION
+)
+
+if [ -z $version ]; then
+	echo No conjur-debify version detected in Gemfile.lock
+	exit 1
+fi
+
+mkdir -p $HOME/debify/"$version"
+gemfile="$HOME/debify/$version/Gemfile"
+
+cat << GEMFILE > "$gemfile"
+source 'https://rubygems.org'
+gem 'conjur-debify', '= $version'
+GEMFILE
+
+export BUNDLE_GEMFILE="$gemfile"
+bundle 1>&2
+
+bundle exec debify "$@"
