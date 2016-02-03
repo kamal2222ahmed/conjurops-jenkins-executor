@@ -50,8 +50,9 @@ Vagrant.configure("2") do |baseconfig|
       config.ssh.forward_agent = true
 
       config.vm.provider :virtualbox do |vbox, override|
-        vbox.memory = opts[:memory] || 1024
-        config.vm.synced_folder ".", "/vagrant"
+        vbox.memory = opts[:memory] || 3072
+        override.vm.synced_folder ".", "/vagrant"
+        override.vm.synced_folder ENV['HOME'], ENV['HOME']
       end
 
       config.vm.provider :aws do |aws, override|
