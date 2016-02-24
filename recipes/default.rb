@@ -1,11 +1,13 @@
 include_recipe 'apt'
 
-execute 'apt-get dist-upgrade' do
-  env 'DEBIAN_FRONTEND' => 'noninteractive'
-  command 'apt-get update && apt-get dist-upgrade -yqq'
-end
+package 'ntp'
+# Installs security patches
+# http://packages.ubuntu.com/trusty-updates/unattended-upgrades
+package 'unattended-upgrades'
+execute 'unattended-upgrade -v'
 
 package 'git'
+package 'nano'
 package 'vim'
 
 # for programm dig
