@@ -10,7 +10,6 @@ aws-*.secrets
 conjur-conjurops.pem
 
 .vagrant
-*.lock
 *~
 *#
 .#*
@@ -19,7 +18,6 @@ conjur-conjurops.pem
 *.un~
 
 # Bundler
-Gemfile.lock
 bin/*
 .bundle/*
 
