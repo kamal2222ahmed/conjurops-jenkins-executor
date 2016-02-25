@@ -16,6 +16,7 @@ default['conjur']['configuration']['ssl_certificate'] = "-----BEGIN CERTIFICATE-
 
 default['packer']['version'] = "packer_#{PACKER_VERSION}"
 default['packer']['checksum'] = '2f1ca794e51de831ace30792ab0886aca516bf6b407f6027e816ba7ca79703b5'
+default['packer']['url_base'] = 'https://releases.hashicorp.com/packer/'
 
 default['summon']['version'] = SUMMON_VERSION
 
