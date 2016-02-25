@@ -16,10 +16,10 @@ default['conjur']['configuration']['ssl_certificate'] = "-----BEGIN CERTIFICATE-
 
 default['packer']['version'] = "packer_#{PACKER_VERSION}"
 default['packer']['checksum'] = '2f1ca794e51de831ace30792ab0886aca516bf6b407f6027e816ba7ca79703b5'
-default['packer']['url_base'] = 'https://releases.hashicorp.com/packer/'
+default['packer']['url_base'] = "https://releases.hashicorp.com/packer/#{PACKER_VERSION}"
 
 default['summon']['version'] = SUMMON_VERSION
 
 default['vagrant']['version'] = VAGRANT_VERSION
-default['vagrant']['url'] = "https://dl.bintray.com/mitchellh/vagrant/vagrant_#{VAGRANT_VERSION}_x86_64.deb"
+default['vagrant']['url'] = "https://releases.hashicorp.com/vagrant/#{VAGRANT_VERSION}/vagrant_#{VAGRANT_VERSION}_x86_64.deb"
 default['vagrant']['checksum'] = 'dcd2c2b5d7ae2183d82b8b363979901474ba8d2006410576ada89d7fa7668336'
