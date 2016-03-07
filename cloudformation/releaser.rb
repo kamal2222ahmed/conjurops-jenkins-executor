@@ -33,17 +33,22 @@ template do
     :Description => 'The DNS name of an existing Amazon Route 53 hosted zone',
     :Type => 'String'
 
+  parameter 'NodeName',
+    :Description => 'Name of the nodes, set in AWS and Jenkins',
+    :Type => 'String',
+    :Default => 'releaser'
+
   resource 'EC2Instance', :Type => 'AWS::EC2::Instance', :Properties => {
     :ImageId => ref('ImageId'),
     :InstanceType => ref('InstanceType'),
     :KeyName => 'jenkins-user',
     :SecurityGroups => ['jenkins-slave'],
     # Loads an external userdata script.
-    :UserData => base64(interpolate(file('userdata-release-slave.sh'))),
+    :UserData => base64(interpolate(file('userdata.sh'))),
     :Tags => [
       {
         :Key => 'Name',
-        :Value => 'jenkins-release-slave'
+        :Value => ref('NodeName')
       }
     ]
   }

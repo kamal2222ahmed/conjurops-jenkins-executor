@@ -2,16 +2,15 @@
 
 ## Creating/modifying the stack itself
 
-We're using the [cloudformation-ruby-dsl](https://github.com/bazaarvoice/cloudformation-ruby-dsl) library to define the CloudFormation stack in Ruby, [jenkins-slave.rb](jenkins-slave.rb).
+We're using the [cloudformation-ruby-dsl](https://github.com/bazaarvoice/cloudformation-ruby-dsl) library to define the CloudFormation stack in Ruby, [executor.rb](executor.rb).
 
 We then run conversion to JSON in a Docker container. Fill in `TEMPLATE`.
 
 ```sh-session
-$ docker build -t cloudformation .
-$ docker run --rm -v $PWD:/app cloudformation ./<TEMPLATE.rb> expand | tee out.json
+./generate_json executor.rb
 ```
 
-Create a new stack or update the existing one using 'out.json' at the
+Create a new stack or update the existing one using 'executor.rb.json' at the
 [CloudFormation dashboard](https://console.aws.amazon.com/cloudformation/home?region=us-east-1)
 for the Conjur CI AWS account.
 
@@ -32,7 +31,6 @@ To update to the new AMI:
 5. When the stack status says 'UPDATE_COMPLETE' you are done.
 6. Switch to the [EC2 dashboard](https://console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:tag:Name=jenkins-slave;sort=launchTime).
 7. Terminate any instances with Name 'jenkins-slave'. They will come back up with the new AMI.
-8. Update the 'Host' field in in the [slave config in Jenkins](https://jenkins.conjur.net/computer/jenkins-slave/) to point to the new instance public DNS.
 
 ## Scaling the cluster
 

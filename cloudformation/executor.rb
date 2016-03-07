@@ -34,6 +34,11 @@ template do
     :AllowedValues => %w(m3.medium m3.large m3.xlarge),
     :ConstraintDescription => 'must be a valid EC2 instance type.'
 
+  parameter 'NodeName',
+    :Description => 'Name of the nodes, set in AWS and Jenkins',
+    :Type => 'String',
+    :Default => 'executor'
+
   resource 'ASG', :Type => 'AWS::AutoScaling::AutoScalingGroup', :Properties => {
     :AvailabilityZones => ['us-east-1a'],
     :HealthCheckType => 'EC2',
@@ -44,8 +49,7 @@ template do
     :Tags => [
       {
         :Key => 'Name',
-        # Grabs a value in an external map file.
-        :Value => 'jenkins-slave',
+        :Value => ref('NodeName'),
         :PropagateAtLaunch => 'true',
       }
     ]
@@ -56,6 +60,10 @@ template do
     :InstanceType => ref('InstanceType'),
     :KeyName => 'jenkins-user',
     :SecurityGroups => ['jenkins-slave'],
+    :BlockDeviceMappings => [{
+      :DeviceName => "/dev/sda1",
+      :Ebs => {:VolumeSize => "50"}
+    }],
     # Loads an external userdata script.
     :UserData => base64(interpolate(file('userdata.sh')))
   }
