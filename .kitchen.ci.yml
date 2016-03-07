@@ -1,4 +1,4 @@
-driver: 
+driver:
   name: ec2
   aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
   aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
@@ -9,9 +9,14 @@ driver:
 
 transport:
   forward_agent: true
-  
+
 platforms:
   - name: ubuntu-14.04
     driver:
-      image_id: <%= ENV['AWS_BASE_AMI'] %>
+      image_id: <%= ENV['AWS_BASE_AMI'] %> # comes from secrets.ci.yml
       username: ubuntu
+
+suites:
+  - name: slave
+    run_list:
+      - recipe[conjurops-jenkins-slave::slave]

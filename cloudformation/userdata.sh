@@ -47,13 +47,18 @@ chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${
 # restart nginx to turn on docker registry
 service nginx restart
 
-echo "Setting up loggly"
-loggly_token=$(/opt/conjur/bin/conjur variable value loggly.com/api-token)
-cat << LOGGLY_CONF > /etc/rsyslog.d/22-loggly.conf
-\$template LogglyFormat,"<%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msgid% [${loggly_token}@41058 tag=\"jenkins\" tag=\"slave\"] %msg%\n"
-*.*             @@logs-01.loggly.com:514;LogglyFormat
-LOGGLY_CONF
+echo "Connecting slave with Jenkins Swarm plugin"
+sudo su - jenkins
 
-service rsyslog restart
+curl -kL -o swarm-client.jar \
+http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar
+
+java -jar swarm-client.jar \
+-disableSslVerification \
+-executors 6 \
+-labels docker -labels slave \
+-master https://jenkins.conjur.net \
+-name executor -mode exclusive \
+-username slaves -password $(conjur variable value jenkins/swarm/password) &
 
 echo "All set!"

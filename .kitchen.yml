@@ -15,7 +15,6 @@ platforms:
 - name: phusion/ubuntu-14.04-amd64
 
 suites:
-  - name: default
+  - name: slave
     run_list:
-      - recipe[conjurops-jenkins-slave]
-    attributes:
+      - recipe[conjurops-jenkins-slave::slave]

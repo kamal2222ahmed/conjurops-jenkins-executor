@@ -10,15 +10,17 @@ execute "install summon" do
   creates "/usr/local/bin/summon"
 end
 
-directory "/usr/libexec/summon" do
+provider_dir = '/usr/local/lib/summon'
+
+directory provider_dir do
   recursive true
 end
 
 execute "install conjur-cli driver for summon" do
-  cwd "/usr/libexec/summon"
+  cwd provider_dir
   command <<-CODE
   curl -L -o conjurcli.sh https://raw.githubusercontent.com/conjurinc/summon-conjurcli/master/conjurcli.sh && \
   chmod a+x conjurcli.sh
   CODE
-  creates "/usr/libexec/summon/conjurcli.sh"
+  creates "#{provider_dir}/conjurcli.sh"
 end

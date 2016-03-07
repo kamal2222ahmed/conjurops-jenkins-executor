@@ -6,7 +6,9 @@ apt_repository "docker" do
   key "58118E89F3A912897C070ADBF76221572C52609D"
 end
 
-package "docker-engine"
+package "docker-engine" do
+  version node['docker']['version']
+end
 
 service "docker" do
   provider Chef::Provider::Service::Upstart
