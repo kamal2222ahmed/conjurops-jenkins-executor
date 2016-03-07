@@ -22,7 +22,7 @@ boxes = [
     :autostart => true,
     :roles => ['builder'],
     :recipes => [
-      'conjurops-jenkins-slave::default'
+      'conjurops-jenkins-slave::slave'
     ],
     :tags => {'conjur/app' => 'conjurops-jenkins-slave'}
   },
