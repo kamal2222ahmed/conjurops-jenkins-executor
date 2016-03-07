@@ -1,5 +1,4 @@
-package 'build-essential'
-package 'ruby-dev'
+package ['build-essential', 'ruby-dev']
 
 include_recipe 'conjur-client'
 

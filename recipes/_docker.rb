@@ -6,6 +6,11 @@ apt_repository "docker" do
   key "58118E89F3A912897C070ADBF76221572C52609D"
 end
 
+unless node['virtualization']['system'] == 'docker'
+  package "linux-image-extra-#{node['kernel']['release']}"
+  execute 'modprobe aufs'
+end
+
 package "docker-engine" do
   version node['docker']['version']
 end

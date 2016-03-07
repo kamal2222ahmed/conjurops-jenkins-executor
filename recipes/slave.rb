@@ -1,15 +1,6 @@
 include_recipe 'apt'
 
-package 'ntp'
-package 'git'
-package 'nano'
-package 'vim'
-
-# for programm dig
-package 'dnsutils'
-
-# test kitchens docker image with ubuntu doesn't have this package
-package "apt-transport-https"
+package ['ntp', 'git', 'nano', 'vim', 'dnsutils', 'apt-transport-https']
 
 include_recipe 'conjurops-jenkins-slave::_user'
 include_recipe 'conjurops-jenkins-slave::_sudo_all'
@@ -26,8 +17,4 @@ include_recipe 'conjurops-jenkins-slave::_debify'
 
 include_recipe 'packer'
 include_recipe 'conjurops-jenkins-slave::_vagrant'
-
-# Installs security patches
-# http://packages.ubuntu.com/trusty-updates/unattended-upgrades
-package 'unattended-upgrades'
-execute 'unattended-upgrade -v'
+include_recipe 'conjurops-jenkins-slave::_upgrades'

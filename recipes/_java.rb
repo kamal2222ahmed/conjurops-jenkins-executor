@@ -11,5 +11,4 @@ bash "accept Oracle Java license" do
   code "echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections"
 end
 
-package "oracle-java8-installer"
-package "oracle-java8-set-default"
+package ['oracle-java8-installer', 'oracle-java8-set-default']

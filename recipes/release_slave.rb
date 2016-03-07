@@ -5,13 +5,7 @@ execute 'apt-get dist-upgrade' do
   command 'apt-get update && apt-get dist-upgrade -yqq'
 end
 
-package 'vim'
-
-# for program dig
-package 'dnsutils'
-
-# test kitchens docker image with ubuntu doesn't have this package
-package "apt-transport-https"
+package ['vim', 'dnsutils', 'apt-transport-https']
 
 include_recipe 'conjurops-jenkins-slave::_user'
 include_recipe 'conjurops-jenkins-slave::_sudo_release'
@@ -25,3 +19,4 @@ include_recipe 'conjurops-jenkins-slave::_docker_registry'
 
 include_recipe 'conjurops-jenkins-slave::_github'
 include_recipe 'conjurops-jenkins-slave::_pubbit'
+include_recipe 'conjurops-jenkins-slave::_upgrades'
