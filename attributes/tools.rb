@@ -1,6 +1,6 @@
 # Tools installed on the Jenkins slave
 
-CHEFDK_VERSION =      '0.11.2-1'
+CHEFDK_VERSION =      '0.11.0-1'
 CONJUR_CLI_VERSION =  '4.30.1-1'
 DOCKER_VERSION =      '1.9.1-0~trusty'
 PACKER_VERSION =      '0.9.0'

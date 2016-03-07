@@ -6,6 +6,6 @@ describe 'conjurops-jenkins-slave::_summon' do
   end
 
   it 'installs conjurcli driver for summon' do
-    expect(command('/usr/libexec/summon/conjurcli.sh').stdout).to match(/No argument received/)
+    expect(command('/usr/local/lib/summon/conjurcli.sh').stdout).to match(/No argument received/)
   end
 end
