@@ -1,3 +1,5 @@
+default['apt']['compile_time_update'] = true
+
 default['user']['username'] = 'jenkins'
 default['user']['home'] = File.join('', 'var', 'lib', node['user']['username'])
 

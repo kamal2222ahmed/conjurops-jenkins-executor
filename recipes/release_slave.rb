@@ -1,10 +1,5 @@
 include_recipe 'apt'
 
-execute 'apt-get dist-upgrade' do
-  env 'DEBIAN_FRONTEND' => 'noninteractive'
-  command 'apt-get update && apt-get dist-upgrade -yqq'
-end
-
 package ['vim', 'dnsutils', 'apt-transport-https']
 
 include_recipe 'conjurops-jenkins-slave::_user'
