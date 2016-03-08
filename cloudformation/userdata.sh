@@ -61,7 +61,7 @@ java -jar \$HOME/swarm-client.jar \
 -disableSslVerification \
 -fsroot /var/lib/jenkins \
 -executors 6 \
--labels docker -labels slave -labels $node_name \
+-labels docker -labels $node_name \
 -master https://jenkins.conjur.net \
 -name $node_name -mode exclusive \
 -username slaves -password $(conjur variable value jenkins/swarm/password) &
