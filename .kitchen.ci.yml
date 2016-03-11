@@ -3,12 +3,12 @@ driver:
   aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
   aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
-  ssh_key: <%= ENV['SSH_PRIVATE_KEY_PATH'] %>
   region: us-east-1
   flavor_id: m3.medium
 
 transport:
   forward_agent: true
+  ssh_key: <%= ENV['SSH_PRIVATE_KEY_PATH'] %>
 
 platforms:
   - name: ubuntu-14.04
