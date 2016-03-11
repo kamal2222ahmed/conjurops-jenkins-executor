@@ -9,12 +9,12 @@ driver:
 transport:
   forward_agent: true
   ssh_key: <%= ENV['SSH_PRIVATE_KEY_PATH'] %>
+  username: ubuntu
 
 platforms:
   - name: ubuntu-14.04
     driver:
       image_id: <%= ENV['AWS_BASE_AMI'] %> # comes from secrets.ci.yml
-      username: ubuntu
 
 suites:
   - name: slave
