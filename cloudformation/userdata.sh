@@ -50,6 +50,17 @@ chef-solo -r https://github.com/conjur-cookbooks/conjur-ssh/releases/download/${
 # restart nginx to turn on docker registry
 service nginx restart
 
+echo "Launching datadog monitoring agent"
+sudo -H -u jenkins bash -c "
+summon --yaml 'API_KEY: !var aws/ci/datadog/api-key' \
+docker run -d --name dd-agent -h `hostname` \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-v /proc/:/host/proc/:ro \
+-v /sys/fs/cgroup/:/host/sys/fs/cgroup:ro \
+--env-file=@SUMMONENVFILE \
+datadog/docker-dd-agent:latest
+"
+
 echo "Connecting with Jenkins Swarm plugin"
 sudo -H -u jenkins bash -c '
 curl -kL -o $HOME/swarm-client.jar \
