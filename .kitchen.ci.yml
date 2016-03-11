@@ -4,7 +4,7 @@ driver:
   aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
   aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
   region: us-east-1
-  flavor_id: m3.medium
+  instance_type: m3.medium
 
 transport:
   forward_agent: true
