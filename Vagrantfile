@@ -39,7 +39,7 @@ boxes = [
 ]
 
 Vagrant.configure("2") do |baseconfig|
-  baseconfig.omnibus.chef_version = "11.18.6"
+  baseconfig.omnibus.chef_version = "12.8.1"
 
   boxes.each do |opts|
     baseconfig.vm.define opts[:name], primary: opts[:primary], autostart: opts[:autostart] do |config|
