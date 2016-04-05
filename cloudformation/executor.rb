@@ -62,7 +62,7 @@ template do
     :SecurityGroups => ['jenkins-slave'],
     :BlockDeviceMappings => [{
       :DeviceName => "/dev/sda1",
-      :Ebs => {:VolumeSize => "50"}
+      :Ebs => {:VolumeSize => "120"}
     }],
     # Loads an external userdata script.
     :UserData => base64(interpolate(file('userdata.sh')))
