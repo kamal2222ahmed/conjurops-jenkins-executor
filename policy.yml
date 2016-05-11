@@ -1,0 +1,40 @@
+- !policy
+  id: jenkins/v1
+  annotations:
+    description: Defines a layer and host factory for Jenkins executors
+  body:
+    - !layer &executors executors
+
+    - !host-factory
+      id: executor-factory
+      layers: [*executors]
+      annotations:
+        description: Host factory for Jenkins executors
+
+    - !group &devs /v4/developers
+
+    - !grant
+      role: !managed_role
+        record: *executors
+        role_name: admin_host
+      members: *devs
+
+    - &variables
+      - !variable /apiary.io/api-key
+      - !variable /artifactory/users/deb/api-key
+      - !variable /artifactory/users/deb/username
+      - !variable /artifactory/users/jenkins/password
+      - !variable /artifactory/users/jenkins/username
+      - !variable /aws/ci/datadog/api-key
+      - !variable /aws/ci/sys_powerful/access_key_id
+      - !variable /aws/ci/sys_powerful/secret_access_key
+      - !variable /aws/ci/test-kitchen/private-key
+      - !variable /jenkins/private-key
+      - !variable /jenkins/swarm/password
+      - !variable /mailgun/api-key
+      - !variable /zendesk/api-token
+
+    - !permit
+      role: *executors
+      privilege: execute
+      resource: *variables
