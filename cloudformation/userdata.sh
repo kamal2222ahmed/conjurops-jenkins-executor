@@ -15,7 +15,7 @@ set -e
 
 host_token={{ref('HostFactoryToken')}}
 node_name={{ref('NodeName')}}
-host_id=$node_name-$(curl http://169.254.169.254/latest/meta-data/instance-id)
+host_id=$node_name-$(curl http://169.254.169.254/latest/meta-data/instance-id)-$(date +%s)
 host_identity=/var/conjur/host-identity.json
 
 CONJUR_HOST_IDENTITY_VERSION=v1.0.1
