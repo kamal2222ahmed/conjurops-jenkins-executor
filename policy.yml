@@ -31,6 +31,7 @@
       - !variable /aws/ci/test-kitchen/private-key
       - !variable /build-0.1.0/ec2/ha-acceptance/identity/access_key
       - !variable /build-0.1.0/ec2/ha-acceptance/identity/secret_key
+      - !variable /ci/conjur-ui.itci.conjur.net/seed_file
       - !variable /jenkins/private-key
       - !variable /jenkins/swarm/password
       - !variable /mailgun/api-key
