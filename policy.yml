@@ -46,3 +46,9 @@
       role: *devs
       privilege: [read, execute]
       resource: *variables
+
+- !grant
+  role: !role
+    kind: webservice-client
+    id: /production/release-bot-2.0/publisher
+  member: !layer jenkins/v1/executors
