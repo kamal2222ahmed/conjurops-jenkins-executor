@@ -55,6 +55,7 @@ Vagrant.configure("2") do |baseconfig|
         vbox.memory = opts[:memory] || 3072
         override.vm.synced_folder ".", "/vagrant"
         override.vm.synced_folder ENV['HOME'], ENV['HOME']
+        vbox.customize ["modifyvm", :id, "--nictype1", "virtio"]
       end
 
       config.vm.provider :aws do |aws, override|
