@@ -36,6 +36,7 @@
       - !variable /jenkins/swarm/password
       - !variable /mailgun/api-key
       - !variable /zendesk/api-token
+      - !variable /supermarket.chef.io/conjurinc/private-key
 
     - !permit
       role: *executors
