@@ -80,6 +80,7 @@ java -jar \$HOME/swarm-client.jar \
 -labels docker -labels $node_name \
 -master https://jenkins.conjur.net \
 -name $node_name -mode exclusive \
+-description '$(curl -s http://169.254.169.254/latest/meta-data/public-hostname)' \
 -username slaves -password $(conjur variable value jenkins/swarm/password) &
 "
 
