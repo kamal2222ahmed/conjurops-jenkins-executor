@@ -1,11 +1,3 @@
-%w(vagrant-omnibus).each do |gem|
-  begin
-    require gem
-  rescue LoadError => e
-    warn "Required gem not found: #{e}"
-  end
-end
-
 boxes = [
   # Clean box, Ubuntu 14.04LTS - for experimentation
   {
@@ -39,8 +31,6 @@ boxes = [
 ]
 
 Vagrant.configure("2") do |baseconfig|
-  baseconfig.omnibus.chef_version = "12.8.1"
-
   boxes.each do |opts|
     baseconfig.vm.define opts[:name], primary: opts[:primary], autostart: opts[:autostart] do |config|
       
@@ -75,6 +65,7 @@ Vagrant.configure("2") do |baseconfig|
 
       config.vm.provision :chef_solo do |chef|
         chef.roles_path = "roles"
+        chef.version = '12.8.1'
         
         #chef.environment = 'development'
         #chef.environments_path = 'environments'
